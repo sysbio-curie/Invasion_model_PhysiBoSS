@@ -198,7 +198,7 @@ class CellTypesTab(object):
         box15 = Box(children=row, layout=box_layout)
         time_step = Button(description='time_step', disabled=True, layout=name_button_layout)
         time_step.style.button_color = 'lightgreen'
-        self.float14 = FloatText(value='2', style=style, layout=widget_layout)
+        self.float14 = FloatText(value='1', style=style, layout=widget_layout)
         units_btn = Button(description='', disabled=True, layout=name_button_layout)
         units_btn.style.button_color = 'tan'
         row = [time_step, self.float14, units_btn]

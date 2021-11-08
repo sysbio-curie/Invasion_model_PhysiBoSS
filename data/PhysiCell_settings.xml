@@ -91,13 +91,13 @@
 		<time_units>min</time_units>
 		<space_units>micron</space_units>
 
-		<dt_diffusion units="min">0.1</dt_diffusion>
-		<dt_mechanics units="min">1</dt_mechanics>
+		<dt_diffusion units="min">0.01</dt_diffusion>
+		<dt_mechanics units="min">0.1</dt_mechanics>
 		<dt_phenotype units="min">6</dt_phenotype>	
 	</overall>
 	
 	<parallel>
-		<omp_num_threads>6</omp_num_threads>
+		<omp_num_threads>10</omp_num_threads>
 	</parallel> 
 	
 	<save>
@@ -224,7 +224,7 @@
 				<intracellular type="maboss">
 					<bnd_filename>../data/boolean_network/new_net.bnd</bnd_filename>
 					<cfg_filename>../data/boolean_network/new_net.cfg</cfg_filename>
-					<time_step>2</time_step>
+					<time_step>1</time_step>
 					<initial_values>
 					</initial_values>
 					<mutations>
@@ -249,10 +249,9 @@
 	
 	<user_parameters>
 		<src_activation_time type="double" units="min">120</src_activation_time> <!--20160 -->
+		<src_stop_time type="double" units="min">2160</src_stop_time>
 		<config_radius_light type="double" units="" description="change the initial radius of the light illumination">20</config_radius_light>
 			<!-- activate in 7 days --> 
-		<save_interval_after_SRC_start type="double" units="min">15.0</save_interval_after_SRC_start>
-		<SVG_interval_after_SRC_start type="double" units="min">3.0</SVG_interval_after_SRC_start>
 		<choose_adhesion_function type="int" units="dimensionless" description="switch between default adhesion function or custom">0</choose_adhesion_function>
 		<random_seed type="int" units="dimensionless" description="change seed of the simulation">0</random_seed> 
 		<!-- example parameters from the template --> 

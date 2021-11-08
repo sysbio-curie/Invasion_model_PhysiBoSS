@@ -120,6 +120,9 @@ int main( int argc, char* argv[] )
 	double src_activation_time = 
 		PhysiCell::parameters.doubles("src_activation_time"); // 60 * 24 * 14; // 
 
+	double src_stop_time = 
+		PhysiCell::parameters.doubles("src_stop_time"); // 60 * 24 * 14; //
+
 	create_cell_types();
 	
 	setup_tissue();
@@ -173,6 +176,10 @@ int main( int argc, char* argv[] )
 		report_file<<"simulated time\tnum cells\tnum division\tnum death\twall time"<<std::endl;
 	}
 	
+	//switch for the SRC
+
+	bool SRC_active = false;
+
 	// main loop 
 	
 	try 
@@ -181,23 +188,27 @@ int main( int argc, char* argv[] )
 		{
 			// save data if it's time.
 
-			static bool src_cells_introduced = false; 
 			static bool light_on = false; 
-			if( PhysiCell_globals.current_time > src_activation_time - 0.01*diffusion_dt && src_cells_introduced == false )
+			if( PhysiCell_globals.current_time > src_activation_time - 0.01*diffusion_dt && SRC_active == false)
 			{
 				std::cout << "SRC activated!" << std::endl << std::endl; 
-				src_cells_introduced = true; 
+
 				light_on = true;
-				PhysiCell_settings.full_save_interval = 
-					parameters.doubles("save_interval_after_SRC_start"); 
-				PhysiCell_settings.SVG_save_interval = 
-					parameters.doubles("SVG_interval_after_SRC_start"); 
-				
-				PhysiCell_globals.next_full_save_time = PhysiCell_globals.current_time; 
-				PhysiCell_globals.next_SVG_save_time = PhysiCell_globals.current_time; 
 				
 				start_SRC_mutation(light_on);
+
+				SRC_active = true;
 			} 
+			else if (PhysiCell_globals.current_time > src_stop_time - 0.01*diffusion_dt && SRC_active == true)
+			{
+				std::cout << "SRC stopped!" << std::endl << std::endl; 
+
+				light_on = false;
+				
+				start_SRC_mutation(light_on);
+
+				SRC_active = false;
+			}
 
 			if( fabs( PhysiCell_globals.current_time - PhysiCell_globals.next_full_save_time ) < 0.01 * diffusion_dt )
 			{

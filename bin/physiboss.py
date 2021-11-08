@@ -64,8 +64,8 @@ class PhysiBoSSTab(object):
         plot_size = '500px'  # small: controls the size of the tab height, not the plot (rf. figsize for that)
         plot_size = '700px'  # medium
         plot_size = '750px'  # medium
-        self.svg_plot.layout.width = '1000px'
-        self.svg_plot.layout.height = '700px'
+        self.svg_plot.layout.width = '1400px'
+        self.svg_plot.layout.height = '1400px'
         self.use_defaults = True
         
         self.axes_min = 0.0
