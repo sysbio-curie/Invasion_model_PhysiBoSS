@@ -65,7 +65,7 @@ class PhysiBoSSTab(object):
         plot_size = '700px'  # medium
         plot_size = '750px'  # medium
         self.svg_plot.layout.width = '1400px'
-        self.svg_plot.layout.height = '1400px'
+        self.svg_plot.layout.height = '1200px'
         self.use_defaults = True
         
         self.axes_min = 0.0
@@ -86,7 +86,7 @@ class PhysiBoSSTab(object):
         box_layout = Layout(display='flex',
                     flex_flow='row',
                     align_items='stretch',
-                    width='900px')
+                    width='100%')
         row1 = Box(children=items_auto, layout=box_layout)
 
         self.tab = VBox([row1, self.svg_plot])
