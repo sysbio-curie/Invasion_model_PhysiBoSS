@@ -2,7 +2,7 @@
 
 MaBoSSIntracellular::MaBoSSIntracellular() : Intracellular()
 {
-	type = "maboss";
+	intracellular_type = "maboss";
 	initial_values.clear();
 	mutations.clear();
 	parameters.clear();
@@ -10,19 +10,20 @@ MaBoSSIntracellular::MaBoSSIntracellular() : Intracellular()
 
 MaBoSSIntracellular::MaBoSSIntracellular(pugi::xml_node& node)
 {
-	type = "maboss";
+	intracellular_type = "maboss";
 	initialize_intracellular_from_pugixml(node);
 }
 
 MaBoSSIntracellular::MaBoSSIntracellular(MaBoSSIntracellular* copy) 
 {
-	type = copy->type;
+	intracellular_type = copy->intracellular_type;
 	bnd_filename = copy->bnd_filename;
 	cfg_filename = copy->cfg_filename;
 	time_step = copy->time_step;
 	discrete_time = copy->discrete_time;
 	time_tick = copy->time_tick;
 	scaling = copy->scaling;
+	time_stochasticity = copy->time_stochasticity;
 	initial_values = copy->initial_values;
 	mutations = copy->mutations;
 	parameters = copy->parameters;
@@ -35,6 +36,7 @@ MaBoSSIntracellular::MaBoSSIntracellular(MaBoSSIntracellular* copy)
 		maboss.set_update_time_step(copy->time_step);
 		maboss.set_discrete_time(copy->discrete_time, copy->time_tick);
 		maboss.set_scaling(copy->scaling);
+		maboss.set_time_stochasticity(copy->time_stochasticity);
 		maboss.restart_node_values();
 		//maboss.set_state(copy->maboss.get_maboss_state());
 		//std::cout << get_state();
@@ -123,6 +125,13 @@ void MaBoSSIntracellular::initialize_intracellular_from_pugixml(pugi::xml_node& 
 	{ 
 		scaling = PhysiCell::xml_get_my_double_value( node_scaling );
 		maboss.set_scaling(scaling);
+	}
+	
+	pugi::xml_node node_time_stochasticity = node.child( "time_stochasticity" );
+	if( node_time_stochasticity )
+	{
+		time_stochasticity = PhysiCell::xml_get_my_double_value( node_time_stochasticity );
+		maboss.set_time_stochasticity(time_stochasticity);
 	}
 }
 

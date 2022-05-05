@@ -77,7 +77,7 @@ extern int filePutContents(const std::string& file, const std::string& data);
 extern std::string stringReplaceAll(const std::string& subject, const std::string& from, const std::string& to);
 
 extern const std::string NL_PATTERN;
-extern const char* fmthexdouble(double d);
+extern const char* fmthexdouble(double d, bool add_quotes = false);
 
 class NullBuffer : public std::streambuf
 {
@@ -86,5 +86,9 @@ public:
 };
 
 static NullBuffer null_buffer;
+
+bool hasEnding (std::string const &fullString, std::string const &ending);
+
+
 
 #endif

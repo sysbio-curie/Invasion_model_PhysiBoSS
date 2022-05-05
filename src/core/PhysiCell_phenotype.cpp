@@ -1098,7 +1098,6 @@ Phenotype& Phenotype::operator=(const Phenotype &p ) {
 	
 	return *this;
 }
-
 /*
 class Bools
 {

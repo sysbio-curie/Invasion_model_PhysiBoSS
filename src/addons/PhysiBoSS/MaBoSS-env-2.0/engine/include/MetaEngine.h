@@ -57,6 +57,7 @@
 #include "Cumulator.h"
 #include "RandomGenerator.h"
 #include "RunConfig.h"
+#include "FixedPointDisplayer.h"
 
 struct EnsembleArgWrapper;
 
@@ -70,12 +71,13 @@ protected:
   double time_tick;
   double max_time;
   unsigned int sample_count;
+  unsigned int statdist_trajcount;
   bool discrete_time;
   unsigned int thread_count;
   
   NetworkState reference_state;
   unsigned int refnode_count;
-
+  NetworkState refnode_mask;
   mutable long long elapsed_core_runtime, user_core_runtime, elapsed_statdist_runtime, user_statdist_runtime, elapsed_epilogue_runtime, user_epilogue_runtime;
   STATE_MAP<NetworkState_Impl, unsigned int> fixpoints;
   std::vector<STATE_MAP<NetworkState_Impl, unsigned int>*> fixpoint_map_v;
@@ -84,7 +86,9 @@ protected:
   std::vector<Cumulator*> cumulator_v;
 
   STATE_MAP<NetworkState_Impl, unsigned int>* mergeFixpointMaps();
-
+  NodeIndex getTargetNode(Network* _network, RandomGenerator* random_generator, const MAP<NodeIndex, double>& nodeTransitionRates, double total_rate) const;
+  double computeTH(Network* _network, const MAP<NodeIndex, double>& nodeTransitionRates, double total_rate) const;
+  
 public:
 
   MetaEngine(Network* network, RunConfig* runconfig) : 
@@ -92,6 +96,7 @@ public:
     time_tick(runconfig->getTimeTick()), 
     max_time(runconfig->getMaxTime()), 
     sample_count(runconfig->getSampleCount()), 
+    statdist_trajcount(runconfig->getStatDistTrajCount()),
     discrete_time(runconfig->isDiscreteTime()), 
     thread_count(runconfig->getThreadCount()) {}
 
@@ -114,14 +119,10 @@ public:
   const STATE_MAP<NetworkState_Impl, double> getNthStateDist(int nn) const;
   const STATE_MAP<NetworkState_Impl, double> getAsymptoticStateDist() const;
 
+  Cumulator* getMergedCumulator() {
+    return merged_cumulator; 
+  }
 
-#ifdef PYTHON_API
-  PyObject* getNumpyStatesDists() const;
-  PyObject* getNumpyLastStatesDists() const;
-  PyObject* getNumpyNodesDists() const;
-  PyObject* getNumpyLastNodesDists() const;
-
-#endif
   const std::map<double, std::map<Node *, double> > getNodesDists() const;
   const std::map<Node*, double> getNthNodesDist(int nn) const;
   const std::map<Node*, double> getAsymptoticNodesDist() const;
@@ -134,13 +135,12 @@ public:
   int getMaxTickIndex() const {return merged_cumulator->getMaxTickIndex();} 
   const double getFinalTime() const;
 
-  void display(std::ostream& output_probtraj, std::ostream& output_statdist, std::ostream& output_fp, bool hexfloat = false) const;
-  void displayStatDist(std::ostream& output_statdist, bool hexfloat = false) const;
-  void displayProbTraj(std::ostream& output_probtraj, bool hexfloat = false) const;
-  void displayFixpoints(std::ostream& output_fp, bool hexfloat = false) const;
+  void displayFixpoints(FixedPointDisplayer* displayer) const;
+  void displayProbTraj(ProbTrajDisplayer* displayer) const;
+  void displayStatDist(StatDistDisplayer* output_statdist) const;
   void displayAsymptotic(std::ostream& output_asymptprob, bool hexfloat = false, bool proba = true) const;
 
-
+  void display(ProbTrajDisplayer* probtraj_displayer, StatDistDisplayer* statdist_displayer, FixedPointDisplayer* fp_displayer) const;
 };
 
 #endif

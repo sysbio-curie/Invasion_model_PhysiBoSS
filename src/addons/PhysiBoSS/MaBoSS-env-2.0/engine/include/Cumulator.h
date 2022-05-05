@@ -67,11 +67,12 @@
 
 static bool COMPUTE_ERRORS = true;
 
-#define HD_BUG
-
 #include "ProbaDist.h"
+#include "RunConfig.h"
 
 class Network;
+class ProbTrajDisplayer;
+class StatDistDisplayer;
 
 class Cumulator {
 
@@ -98,7 +99,7 @@ class Cumulator {
       return mp.size();
     }
 
-    void incr(NetworkState_Impl state, double tm_slice, double TH) {
+    void incr(const NetworkState_Impl& state, double tm_slice, double TH) {
       STATE_MAP<NetworkState_Impl, TickValue>::iterator iter = mp.find(state);
       if (iter == mp.end()) {
 	mp[state] = TickValue(tm_slice, tm_slice * TH);
@@ -108,13 +109,13 @@ class Cumulator {
       }
     }
 
-    void cumulTMSliceSquare(NetworkState_Impl state, double tm_slice) {
+    void cumulTMSliceSquare(const NetworkState_Impl& state, double tm_slice) {
       STATE_MAP<NetworkState_Impl, TickValue>::iterator iter = mp.find(state);
       assert(iter != mp.end());
       (*iter).second.tm_slice_square += tm_slice * tm_slice;
     }
     
-    void add(NetworkState_Impl state, const TickValue& tick_value) {
+    void add(const NetworkState_Impl& state, const TickValue& tick_value) {
       STATE_MAP<NetworkState_Impl, TickValue>::iterator iter = mp.find(state);
       if (iter == mp.end()) {
 	mp[state] = tick_value;
@@ -153,6 +154,11 @@ class Cumulator {
 	++iter;
       }
 	
+      const NetworkState_Impl& next2(TickValue& tick_value) {
+	tick_value = (*iter).second;
+	return (*iter++).first;
+      }
+	
       void next(TickValue& tick_value) {
 	tick_value = (*iter).second;
 	++iter;
@@ -162,13 +168,11 @@ class Cumulator {
     Iterator iterator() {return Iterator(*this);}
     Iterator iterator() const {return Iterator(*this);}
   };
-
-#ifdef HD_BUG
   class HDCumulMap {
     STATE_MAP<NetworkState_Impl, double> mp;
 
   public:
-    void incr(NetworkState_Impl fullstate, double tm_slice) {
+    void incr(const NetworkState_Impl& fullstate, double tm_slice) {
       STATE_MAP<NetworkState_Impl, double>::iterator iter = mp.find(fullstate);
       if (iter == mp.end()) {
 	mp[fullstate] = tm_slice;
@@ -177,7 +181,7 @@ class Cumulator {
       }
     }
 
-    void add(NetworkState_Impl fullstate, double tm_slice) {
+    void add(const NetworkState_Impl& fullstate, double tm_slice) {
       STATE_MAP<NetworkState_Impl, double>::iterator iter = mp.find(fullstate);
       if (iter == mp.end()) {
 	mp[fullstate] = tm_slice;
@@ -211,6 +215,11 @@ class Cumulator {
 	++iter;
       }
 	
+      const NetworkState_Impl& next2(double& tm_slice) {
+	tm_slice = (*iter).second;
+	return (*iter++).first;
+      }
+
       void next(double& tm_slice) {
 	tm_slice = (*iter).second;
 	++iter;
@@ -220,7 +229,7 @@ class Cumulator {
     Iterator iterator() {return Iterator(*this);}
     Iterator iterator() const {return Iterator(*this);}
   };
-#endif
+
   RunConfig* runconfig;
   double time_tick;
   unsigned int sample_count;
@@ -236,9 +245,9 @@ class Cumulator {
   int max_tick_index;
   NetworkState_Impl output_mask;
   std::vector<CumulMap> cumul_map_v;
-#ifdef HD_BUG
   std::vector<HDCumulMap> hd_cumul_map_v;
-#endif
+  unsigned int statdist_trajcount;
+  NetworkState_Impl refnode_mask;
   std::vector<ProbaDist> proba_dist_v;
   ProbaDist curtraj_proba_dist;
   STATE_MAP<NetworkState_Impl, LastTickValue> last_tick_map;
@@ -259,7 +268,6 @@ class Cumulator {
     return cumul_map_v[nn];
   }
 
-#ifdef HD_BUG
   HDCumulMap& get_hd_map() {
     assert((size_t)tick_index < hd_cumul_map_v.size());
     return hd_cumul_map_v[tick_index];
@@ -274,7 +282,6 @@ class Cumulator {
     assert(nn < hd_cumul_map_v.size());
     return hd_cumul_map_v[nn];
   }
-#endif
 
   double cumultime(int at_tick_index = -1) {
     if (at_tick_index < 0) {
@@ -283,23 +290,23 @@ class Cumulator {
     return at_tick_index * time_tick;
   }
 
-  bool incr(NetworkState_Impl state, double tm_slice, double TH, NetworkState_Impl fullstate) {
+  bool incr(const NetworkState_Impl& state, double tm_slice, double TH, const NetworkState_Impl& fullstate) {
     if (tm_slice == 0.0) {
       return true;
     }
 
-    curtraj_proba_dist.incr(fullstate, tm_slice);
-
+    if (sample_num < statdist_trajcount) {
+      curtraj_proba_dist.incr(fullstate, tm_slice);
+    }
     if (tick_index >= max_size) {
       return false;
     }
     tick_completed = false;
     CumulMap& mp = get_map();
     mp.incr(state, tm_slice, TH);
-#ifdef HD_BUG
+
     HDCumulMap& hd_mp = get_hd_map();
     hd_mp.incr(fullstate, tm_slice);
-#endif
 
     STATE_MAP<NetworkState_Impl, LastTickValue>::iterator last_tick_iter = last_tick_map.find(state);
     if (last_tick_iter == last_tick_map.end()) {
@@ -315,35 +322,38 @@ class Cumulator {
   void check() const;
 
   void add(unsigned int where, const CumulMap& add_cumul_map);
-#ifdef HD_BUG
   void add(unsigned int where, const HDCumulMap& add_hd_cumul_map);
-#endif
   
 public:
 
-  Cumulator(RunConfig* runconfig, double time_tick, double max_time, unsigned int sample_count) :
-    runconfig(runconfig), time_tick(time_tick), sample_count(sample_count), sample_num(0), last_tm(0.), tick_index(0) {
-#ifdef USE_BITSET
+  Cumulator(RunConfig* runconfig, double time_tick, double max_time, unsigned int sample_count, unsigned int statdist_trajcount) :
+    runconfig(runconfig), time_tick(time_tick), sample_count(sample_count), sample_num(0), last_tm(0.), tick_index(0), statdist_trajcount(statdist_trajcount) {
+#ifdef USE_STATIC_BITSET
     output_mask.set();
-#elif defined(USE_BOOST_BITSET)
-    output_mask.resize(MAXNODES);
+    refnode_mask.reset();
+#elif defined(USE_BOOST_BITSET) || defined(USE_DYNAMIC_BITSET)
+    // EV: 2020-10-23
+    //output_mask.resize(MAXNODES);
+    output_mask.resize(Network::getMaxNodeSize());
     output_mask.set();
+    refnode_mask.resize(Network::getMaxNodeSize());
+    refnode_mask.reset();
 #else
     output_mask = ~0ULL;
+    refnode_mask = 0ULL;
 #endif
     max_size = (int)(max_time/time_tick)+2;
     max_tick_index = max_size;
     cumul_map_v.resize(max_size);
-#ifdef HD_BUG
     hd_cumul_map_v.resize(max_size);
-#endif
+
     if (COMPUTE_ERRORS) {
       TH_square_v.resize(max_size);
       for (int nn = 0; nn < max_size; ++nn) {
 	TH_square_v[nn] = 0.;
       }
     }
-    proba_dist_v.resize(sample_count);
+    proba_dist_v.resize(statdist_trajcount);
     tick_completed = false;
   }
 
@@ -366,7 +376,8 @@ public:
       CumulMap& mp = get_map();
       double TH = 0.0;
       while (begin != end) {
-	NetworkState_Impl state = (*begin).first;
+	//NetworkState_Impl state = (*begin).first;
+	const NetworkState_Impl& state = (*begin).first;
 	double tm_slice = (*begin).second.tm_slice;
 	TH += (*begin).second.TH;
 	if (COMPUTE_ERRORS) {
@@ -384,8 +395,12 @@ public:
   }
 
   void cumul(const NetworkState& network_state, double tm, double TH) {
-    NetworkState_Impl fullstate = network_state.getState();
-    NetworkState_Impl state = (fullstate & output_mask);
+#ifdef USE_DYNAMIC_BITSET
+    NetworkState_Impl fullstate(network_state.getState() & refnode_mask, 1);
+#else
+    NetworkState_Impl fullstate(network_state.getState() & refnode_mask);
+#endif    
+    NetworkState_Impl state(network_state.getState() & output_mask);
     double time_1 = cumultime(tick_index+1);
     if (tm < time_1) {
       incr(state, tm - last_tm, TH, fullstate);
@@ -410,13 +425,16 @@ public:
     last_tm = tm;
   }
 
-  void setOutputMask(NetworkState_Impl output_mask) {
+  void setOutputMask(const NetworkState_Impl& output_mask) {
     this->output_mask = output_mask;
   }
+  
+  void setRefnodeMask(const NetworkState_Impl& refnode_mask) {
+    this->refnode_mask = refnode_mask;
+  }
 
-  void displayCSV(Network* network, unsigned int refnode_count, std::ostream& os_probtraj = std::cout, std::ostream& os_statdist = std::cout, bool hexfloat = false) const;
-  void displayProbTrajCSV(Network* network, unsigned int refnode_count, std::ostream& os_probtraj = std::cout, bool hexfloat = false) const;
-  void displayStatDistCSV(Network* network, unsigned int refnode_count, std::ostream& os_statdist = std::cout, bool hexfloat = false) const;
+  void displayProbTraj(Network* network, unsigned int refnode_count, ProbTrajDisplayer* displayer) const;
+  void displayStatDist(Network* network, unsigned int refnode_count, StatDistDisplayer* displayer) const;
   void displayAsymptoticCSV(Network* network, unsigned int refnode_count, std::ostream& os_asymptprob = std::cout, bool hexfloat = false, bool proba = true) const;
 
 
@@ -426,8 +444,8 @@ public:
   PyObject* getNumpyLastStatesDists(Network* network) const;
   std::set<NetworkState_Impl> getStates() const;
   std::vector<NetworkState_Impl> getLastStates() const;
-  PyObject* getNumpyNodesDists(Network* network) const;
-  PyObject* getNumpyLastNodesDists(Network* network) const;
+  PyObject* getNumpyNodesDists(Network* network, std::vector<Node*> output_nodes) const;
+  PyObject* getNumpyLastNodesDists(Network* network, std::vector<Node*> output_nodes) const;
   std::vector<Node*> getNodes(Network* network) const;
   
 #endif
@@ -444,7 +462,9 @@ public:
 
   unsigned int getSampleCount() const {return sample_count;}
 
-  static Cumulator* mergeCumulators(RunConfig* runconfig, std::vector<Cumulator*>& cumulator_v);
+  static Cumulator* mergeCumulatorsParallel(RunConfig* runconfig, std::vector<Cumulator*>& cumulator_v);
+  static void mergePairOfCumulators(Cumulator* cumulator_1, Cumulator* cumulator_2);
+  static void* threadMergeCumulatorWrapper(void *arg);
 };
 
 #endif

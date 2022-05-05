@@ -60,6 +60,7 @@
 #include "Cumulator.h"
 #include "RandomGenerator.h"
 #include "RunConfig.h"
+#include "FinalStateDisplayer.h"
 
 struct FinalStateArgWrapper;
 
@@ -99,18 +100,18 @@ public:
   void run(std::ostream* output_traj);
   ~FinalStateSimulationEngine();
 
-  const STATE_MAP<NetworkState_Impl, double> getFinalStates() const {return final_states;}
+  //const STATE_MAP<NetworkState_Impl, double>& getFinalStates() const {return final_states;}
   const STATE_MAP<Node*, double> getFinalNodes() const;
   const double getFinalTime() const { return max_time; }
 
 #ifdef PYTHON_API
   PyObject* getNumpyLastStatesDists() const;
   std::vector<Node*> getNodes() const;
-  PyObject* getNumpyLastNodesDists() const;
+  PyObject* getNumpyLastNodesDists(std::vector<Node*> output_nodes) const;
 #endif
 
   void displayFinal(std::ostream& output_final, bool hexfloat=false) const;
-
+  void displayFinal(FinalStateDisplayer* displayer) const;
 };
 
 #endif

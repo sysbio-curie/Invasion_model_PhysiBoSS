@@ -94,9 +94,10 @@ void setup_tissue( void );
 void setup_microenvironment( void ); 
 // custom pathology coloring function 
 std::vector<std::string> my_coloring_function( Cell* );
-std::vector<std::string> ECM_coloring_function( Cell* );
+std::vector<std::string> ECM_coloring_function( Cell*);
 std::vector<std::string> phase_coloring_function( Cell* );
 std::vector<std::string> node_coloring_function( Cell* );
+void SVG_plot_ecm( std::string filename , Microenvironment& M, double z_slice , double time, std::vector<std::string> (*cell_coloring_function)(Cell*), std::string sub );
 
 // custom cell phenotype functions could go here 
 void tumor_cell_phenotype_with_signaling( Cell* pCell, Phenotype& phenotype, double dt );
@@ -104,8 +105,9 @@ void tumor_cell_phenotype_with_signaling( Cell* pCell, Phenotype& phenotype, dou
 void set_input_nodes(Cell* pCell); 
 void from_nodes_to_cell(Cell* pCell, Phenotype& phenotype, double dt);
 std::vector<init_record> read_init_file(std::string filename, char delimiter, bool header);
-void build_ecm_shape();
+void set_substrate_density(int density_index, double max, double min, double radius);
 std::vector<std::vector<double>> create_cell_sphere_positions(double cell_radius, double sphere_radius);
+std::vector<std::vector<double>> create_cell_disc_positions(double cell_radius, double disc_radius);
 /** \brief Go to proliferative phase if proliferation ON and in G0 phase */
 void do_proliferation(Cell* pCell, Phenotype& phenotype, double dt);
 bool wait_for_cell_growth(Cell* pCell, Phenotype& phenotype, double dt);
@@ -122,19 +124,19 @@ inline void static_volume_function( Cell* pCell, Phenotype& phenotype, double dt
 void set_mmp( int activate );
 	
 /** \brief Change the current value of integrin percent coeff, increase or decrease according to up value */
-inline double evolve_integrin_coef(Cell* pC, int up, double dt )
-{ double pintegrin = pC->custom_data["pintegrin"]; return evolve_coef( up, pintegrin, dt );  };
+inline void evolve_integrin_coef(Cell* pC, int up, double dt )
+{ pC->custom_data["integrin"] = evolve_coef( up, pC->custom_data["integrin"], dt ); return ; };
 	
 /** \brief Change the current value of cell cell adhesion percent coeff, increase or decrease according to up value */
-inline double evolve_cellcell_coef(Cell* pC, int up, double dt )
-{ double padhesion = pC->custom_data["padhesion"]; return evolve_coef( up, padhesion, dt );   };
+inline void evolve_cellcell_coef(Cell* pC, int up, double dt )
+{pC->custom_data["padhesion"] = evolve_coef( up, pC->custom_data["padhesion"], dt ); return ; };
 
-inline double evolve_motility_coef(Cell* pC, int up, double dt )
-	{ double pmotility = pC->custom_data["pmotility"]; return evolve_coef( up, pmotility, dt); }; //maybe both pmotility and padhseion to move?
+inline void evolve_motility_coef(Cell* pC, int up, double dt )
+{pC->custom_data["pmotility"] = evolve_coef( up, pC->custom_data["pmotility"], dt); return ;}; //maybe both pmotility and padhseion to move?
 
-	
-/** \brief Return value of adhesion strength with ECM according to integrin level */
-double integrinStrength(Cell* pCell);
+void custom_cell_attach(Cell* pCell);
+
+void custom_detach_cells(Cell* pCell);
 	
 /** \brief Get the current value of heterotypic adhesion strength */
 inline double get_heterotypic_strength( double percent )
@@ -154,7 +156,7 @@ inline double get_motility_amplitude( double percent )
 
 /** \brief Return amount of contact with other cells */
 inline double contact_cell(Cell* pCell)
-	{ double contact =  pCell->custom_data["cell_contact"] / pCell->phenotype.geometry.radius; return contact; };
+	{ double contact =  pCell->custom_data["cell_contact"]; return contact; };
 
 /** \brief (De)-Activate ECM degradation by the cell */
 void set_mmp( Cell* pCell, int activate );

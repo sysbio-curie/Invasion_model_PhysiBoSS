@@ -52,12 +52,15 @@
 
 #include "maboss-config.h"
 
-#if MAXNODES > 64
-//#define USE_BOOST_BITSET
-#define USE_BITSET
-#else
+#ifdef USE_DYNAMIC_BITSET
+
 #undef MAXNODES
-#define MAXNODES 64
+#define MAXNODES 0xFFFFFFF
+
+#elif MAXNODES>64
+
+#define USE_STATIC_BITSET
+
 #endif
 
 // To be defined only when comparing bitset with ulong implementation
@@ -66,6 +69,12 @@
 #ifdef HAS_UNORDERED_MAP
 #define USE_UNORDERED_MAP
 #endif
+
+
+// #ifdef SBML_COMPAT
+// #include <sbml/SBMLTypes.h>
+// #endif
+
 
 #define MAP std::map
 
@@ -80,8 +89,10 @@
 #include <string.h>
 #ifdef USE_BOOST_BITSET
 #include <boost/dynamic_bitset.hpp>
-#elif defined(USE_BITSET)
+#elif defined(USE_STATIC_BITSET)
 #include <bitset>
+#elif defined(USE_DYNAMIC_BITSET)
+#include "MBDynBitset.h"
 #endif
 #include "Function.h"
 
@@ -89,6 +100,8 @@ const std::string LOGICAL_AND_SYMBOL = " & ";
 const std::string LOGICAL_OR_SYMBOL = " | ";
 const std::string LOGICAL_NOT_SYMBOL = "!";
 const std::string LOGICAL_XOR_SYMBOL = " ^ ";
+
+extern bool MaBoSS_quiet;
 
 class Expression;
 class NotLogicalExpression;
@@ -146,13 +159,15 @@ typedef unsigned int SymbolIndex;
 
 #ifdef USE_BOOST_BITSET
 
+//typedef boost::dynamic_bitset<uint8_t> NetworkState_Impl;
 typedef boost::dynamic_bitset<> NetworkState_Impl;
 
-#elif defined(USE_BITSET)
+#elif defined(USE_STATIC_BITSET)
 
 #ifdef USE_UNORDERED_MAP
 typedef std::bitset<MAXNODES> NetworkState_Impl;
 
+//#ifndef HAS_BOOST_UNORDERED_MAP
 namespace std {
   template <> struct HASH_STRUCT<bitset<MAXNODES> > : public std::unary_function<bitset<MAXNODES>, size_t>
   {
@@ -215,6 +230,9 @@ template <int N> class sbitset : public std::bitset<N> {
 
 typedef sbitset<MAXNODES> NetworkState_Impl;
 #endif
+#elif defined(USE_DYNAMIC_BITSET)
+
+typedef MBDynBitset NetworkState_Impl;
 
 #else
 typedef unsigned long long NetworkState_Impl;
@@ -263,7 +281,7 @@ class Node {
 
   void setIndex(NodeIndex new_index) {
     index = new_index;
-#if !defined(USE_BITSET) && !defined(USE_BOOST_BITSET)
+#if !defined(USE_STATIC_BITSET) && !defined(USE_BOOST_BITSET) && !defined(USE_DYNAMIC_BITSET)
     node_bit = 1ULL << new_index;
 #endif
   }
@@ -391,7 +409,7 @@ class Node {
 
   NodeIndex getIndex() const {return index;}
 
-#if !defined(USE_BITSET) && !defined(USE_BOOST_BITSET)
+#if !defined(USE_STATIC_BITSET) && !defined(USE_BOOST_BITSET) && !defined(USE_DYNAMIC_BITSET)
   NetworkState_Impl getNodeBit() const {return node_bit;}
 #endif
 
@@ -543,6 +561,20 @@ class Network {
   MAP<std::string, bool> node_def_map;
   std::vector<IStateGroup*>* istate_group_list;
   SymbolTable* symbol_table;
+  static size_t MAX_NODE_SIZE;
+
+  // must be call before creating a new node
+  void checkNewNode() {
+    size_t size = node_map.size();
+    if (size >= MAXNODES) {
+      std::ostringstream ostr;
+      ostr << "maximum node count exceeded: maximum allowed is " << MAXNODES;
+      throw BNException(ostr.str());
+    }
+    if (size >= MAX_NODE_SIZE) {
+      MAX_NODE_SIZE = size+1;
+    }
+  }
 
 public:
 
@@ -551,9 +583,13 @@ public:
   Network(const Network& network);
   Network& operator=(const Network& network);
 
-  int parse(const char* file = NULL, std::map<std::string, NodeIndex>* nodes_indexes = NULL);
+  int parse(const char* file = NULL, std::map<std::string, NodeIndex>* nodes_indexes = NULL, bool is_temp_file = false, bool useSBMLNames = false);
   int parseExpression(const char* content = NULL, std::map<std::string, NodeIndex>* nodes_indexes = NULL);
-
+  
+  #ifdef SBML_COMPAT
+  int parseSBML(const char* file, std::map<std::string, NodeIndex>* nodes_indexes = NULL, bool useSBMLNames = false);
+  #endif
+  
   std::vector<IStateGroup*>* getIStateGroup() {
     return istate_group_list;
   }
@@ -563,6 +599,7 @@ public:
   SymbolTable* getSymbolTable() { 
     return symbol_table;
   };
+
   Node* defineNode(const std::string& label, const std::string& description = "");
 
   Node* getNode(const std::string& label);
@@ -576,17 +613,33 @@ public:
     if (node_map.find(label) != node_map.end()) {
       return node_map[label];
     }
-    if (node_map.size() >= MAXNODES) {
-      std::ostringstream ostr;
-      ostr << MAXNODES;
-      throw BNException("maximum node count exceeded " + ostr.str());
-    }
+    checkNewNode();
     Node* node = new Node(label, "", last_index++); // node factory
     node_map[label] = node;
     return node;
   }
 
   size_t getNodeCount() const {return node_map.size();}
+
+  static size_t getMaxNodeSize() {
+    //MAX_NODE_SIZE = 508; // for testing
+    //static bool msg_displayed = false;
+    static bool msg_displayed = true;
+    if (!msg_displayed) {
+      if (!MaBoSS_quiet) {
+	std::cerr << "\nMaBoSS notice:\n";
+	std::cerr << "  Using dynamic bitset implementation (any number of nodes): this version is not fully optimized and may use a large amount of memory\n";
+	std::cerr << "  For this " << MAX_NODE_SIZE << " node network, preferably used ";
+	if (MAX_NODE_SIZE <= 64) {
+	  std::cerr << "the standard 'MaBoSS' program\n";
+	} else {
+	  std::cerr << "the static bitset implementation program 'MaBoSS_" << MAX_NODE_SIZE << "n' built using: make MAXNODES=" << MAX_NODE_SIZE << "\n";
+	}
+      }
+      msg_displayed = true;
+    }
+    return MAX_NODE_SIZE;
+  }
 
   void compile(std::map<std::string, NodeIndex>* nodes_indexes = NULL);
 
@@ -632,7 +685,7 @@ public:
 class NetworkState {
   NetworkState_Impl state;
 
-#if !defined(USE_BITSET) && !defined(USE_BOOST_BITSET)
+#if !defined(USE_STATIC_BITSET) && !defined(USE_BOOST_BITSET) && !defined(USE_DYNAMIC_BITSET)
   static NetworkState_Impl nodeBit(const Node* node) {
     return node->getNodeBit();
   }
@@ -645,17 +698,26 @@ public:
 
 public:
   NetworkState(const NetworkState_Impl& state) : state(state) { }
+#ifdef USE_DYNAMIC_BITSET
+  NetworkState(const NetworkState_Impl& state, int copy) : state(state, 1) { }
+#else
+  NetworkState(const NetworkState_Impl& state, int copy) : state(state) { }
+#endif
 
-#ifdef USE_BITSET
+#ifdef USE_STATIC_BITSET
   NetworkState() { }
-#elif defined(USE_BOOST_BITSET)
-  NetworkState() : state(MAXNODES) { }
+#elif defined(USE_BOOST_BITSET) || defined(USE_DYNAMIC_BITSET)
+  // EV: 2020-10-23
+  //NetworkState() : state(MAXNODES) { }
+  NetworkState() : state(Network::getMaxNodeSize()) { }
+  // EV: 2020-12-01 would be better to create a 0-size state and then call resize dynamically
+  //NetworkState() : state(0) { }
 #else
   NetworkState() : state(0ULL) { }
 #endif
 
   NodeState getNodeState(const Node* node) const {
-#if defined(USE_BITSET) || defined(USE_BOOST_BITSET)
+#if defined(USE_STATIC_BITSET) || defined(USE_BOOST_BITSET) || defined(USE_DYNAMIC_BITSET)
     return state.test(node->getIndex());
 #else
     return state & nodeBit(node);
@@ -663,7 +725,7 @@ public:
   }
 
   void setNodeState(const Node* node, NodeState node_state) {
-#if defined(USE_BITSET) || defined(USE_BOOST_BITSET)
+#if defined(USE_STATIC_BITSET) || defined(USE_BOOST_BITSET) || defined(USE_DYNAMIC_BITSET)
     state.set(node->getIndex(), node_state);
 #else
     if (node_state) {
@@ -675,7 +737,7 @@ public:
   }
 
   void flipState(const Node* node) {
-#if defined(USE_BITSET) || defined(USE_BOOST_BITSET)
+#if defined(USE_STATIC_BITSET) || defined(USE_BOOST_BITSET) || defined(USE_DYNAMIC_BITSET)
     //state.set(node->getIndex(), !state.test(node->getIndex()));
     state.flip(node->getIndex());
 #else
@@ -686,7 +748,11 @@ public:
   // returns true if and only if there is a logical input expression that allows to compute state from input nodes
   bool computeNodeState(const Node* node, NodeState& node_state);
 
+#ifdef USE_DYNAMIC_BITSET
+  NetworkState_Impl getState(int copy) const {return NetworkState_Impl(state, copy);}
+#endif
   NetworkState_Impl getState() const {return state;}
+
 
   void display(std::ostream& os, Network* network) const;
 
@@ -699,10 +765,10 @@ public:
     return state < network_state.state;
   }
 #endif
-  unsigned int hamming(Network* network, NetworkState_Impl state) const;
+  unsigned int hamming(Network* network, const NetworkState_Impl& state) const;
 
-  static NodeState getState(Node* node, NetworkState_Impl state) {
-#if defined(USE_BITSET) || defined(USE_BOOST_BITSET)
+  static NodeState getState(Node* node, const NetworkState_Impl &state) {
+#if defined(USE_STATIC_BITSET) || defined(USE_BOOST_BITSET) || defined(USE_DYNAMIC_BITSET)
     return state.test(node->getIndex());
 #else
     return state & nodeBit(node);
@@ -812,9 +878,11 @@ public:
   }
 
   void display(std::ostream& os) const {
+    os <<  "(";
     left->display(os);
     os <<  " * ";
     right->display(os);
+    os <<  ")";
   }
 
   void generateLogicalExpression(LogicalExprGenContext& genctx) const;
@@ -832,9 +900,11 @@ public:
   }
 
   void display(std::ostream& os) const {
+    os <<  "(";
     left->display(os);
     os <<  " / ";
     right->display(os);
+    os << ")";
   }
 
   void generateLogicalExpression(LogicalExprGenContext& genctx) const;
@@ -852,9 +922,11 @@ public:
   }
 
   void display(std::ostream& os) const {
+    os <<  "(";
     left->display(os);
     os <<  " + ";
     right->display(os);
+    os << ")";
   }
 
   void generateLogicalExpression(LogicalExprGenContext& genctx) const;
@@ -872,9 +944,11 @@ public:
   }
 
   void display(std::ostream& os) const {
+    os <<  "(";
     left->display(os);
     os <<  " - ";
     right->display(os);
+    os << ")";
   }
 
   void generateLogicalExpression(LogicalExprGenContext& genctx) const;
@@ -892,9 +966,11 @@ public:
   }
 
   void display(std::ostream& os) const {
+    os <<  "(";
     left->display(os);
     os <<  " == ";
     right->display(os);
+    os << ")";
   }
 
   virtual bool isLogicalExpression() const {return true;}
@@ -914,9 +990,11 @@ public:
   }
 
   void display(std::ostream& os) const {
+    os <<  "(";
     left->display(os);
     os <<  " != ";
     right->display(os);
+    os << ")";
   }
 
   virtual bool isLogicalExpression() const {return true;}
@@ -936,9 +1014,11 @@ public:
   }
 
   void display(std::ostream& os) const {
+    os <<  "(";
     left->display(os);
     os <<  " < ";
     right->display(os);
+    os << ")";
   }
 
   virtual bool isLogicalExpression() const {return true;}
@@ -958,9 +1038,11 @@ public:
   }
 
   void display(std::ostream& os) const {
+    os <<  "(";
     left->display(os);
     os <<  " <= ";
     right->display(os);
+    os << ")";
   }
 
   virtual bool isLogicalExpression() const {return true;}
@@ -980,9 +1062,11 @@ public:
   }
 
   void display(std::ostream& os) const {
+    os <<  "(";
     left->display(os);
     os <<  " > ";
     right->display(os);
+    os << ")";
   }
 
   virtual bool isLogicalExpression() const {return true;}
@@ -1002,9 +1086,11 @@ public:
   }
 
   void display(std::ostream& os) const {
+    os <<  "(";
     left->display(os);
     os <<  " >= ";
     right->display(os);
+    os << ")";
   }
 
   virtual bool isLogicalExpression() const {return true;}
@@ -1038,11 +1124,13 @@ public:
   }
 
   void display(std::ostream& os) const {
+    os <<  "(";
     cond_expr->display(os);
     os <<  " ? ";
     true_expr->display(os);
     os <<  " : ";
     false_expr->display(os);
+    os << ")";
   }
 
   bool isConstantExpression() const {
@@ -1184,9 +1272,11 @@ public:
   }
 
   void display(std::ostream& os) const {
+    os <<  "(";
     left->display(os);
     os <<  " OR ";
     right->display(os);
+    os << ")";
   }
 
   virtual bool isLogicalExpression() const {return true;}
@@ -1209,9 +1299,11 @@ public:
   bool generationWillAddParenthesis() const {return true;}
 
   void display(std::ostream& os) const {
+    os <<  "(";
     left->display(os);
     os <<  " AND ";
     right->display(os);
+    os << ")";
   }
 
   bool isLogicalExpression() const {return true;}
@@ -1233,9 +1325,11 @@ public:
   }
 
   void display(std::ostream& os) const {
+    os <<  "(";
     left->display(os);
     os <<  " XOR ";
     right->display(os);
+    os << ")";
   }
 
   bool isLogicalExpression() const {return true;}
@@ -1327,7 +1421,7 @@ public:
   ArgumentList* clone() const {
     ArgumentList* arg_list_cloned = new ArgumentList();
     for (std::vector<Expression*>::const_iterator iter = expr_v.begin(); iter != expr_v.end(); ++iter) {
-      arg_list_cloned->push_back(*iter);
+      arg_list_cloned->push_back((*iter)->clone());
     }
     return arg_list_cloned;
   }
@@ -1360,7 +1454,7 @@ public:
   }
 
   const std::vector<Expression*>& getExpressionList() const { return expr_v; }
-  size_t getExpressionListCount() { return expr_v.size(); }
+  size_t getExpressionListCount() const { return expr_v.size(); }
 
   ~ArgumentList() {
     for (std::vector<Expression*>::iterator iter = expr_v.begin(); iter != expr_v.end(); ++iter) {
@@ -1415,9 +1509,7 @@ public:
 
   bool isConstantExpression() const {return arg_list->isConstantExpression();}
 
-  void generateLogicalExpression(LogicalExprGenContext& genctx) const {
-    // for now
-  }
+  void generateLogicalExpression(LogicalExprGenContext& genctx) const;
 
   virtual ~FuncCallExpression() {
     delete arg_list;
