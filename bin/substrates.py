@@ -97,7 +97,7 @@ class SubstrateTab(object):
         tab_height = '500px'
         constWidth = '180px'
         constWidth2 = '150px'
-        tab_layout = Layout(width='600px',   # border='2px solid black',
+        tab_layout = Layout(width='900px',   # border='2px solid black',
                             height=tab_height, ) #overflow_y='scroll')
 
         max_frames = 1   
@@ -110,7 +110,7 @@ class SubstrateTab(object):
         svg_plot_size = '700px'
         svg_plot_size = '600px'
         svg_plot_size = '700px'
-        svg_plot_size = '1600px'
+        svg_plot_size = '900px'
         self.i_plot.layout.width = svg_plot_size
         self.i_plot.layout.height = svg_plot_size
 

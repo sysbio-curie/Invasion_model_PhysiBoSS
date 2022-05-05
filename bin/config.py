@@ -117,10 +117,14 @@ class ConfigTab(object):
 
         self.omp_threads = BoundedIntText(
             min=1,
-            max=4,
+            max=10,
             description='# threads',
             layout=Layout(width=constWidth),
         )
+
+        self.use2D = Checkbox(
+            description='Use2D',    # SVG
+            layout=Layout(width='150px') )
 
         # self.toggle_prng = Checkbox(
         #     description='Seed PRNG', style={'description_width': 'initial'},  # e.g. 'initial'  '120px'
@@ -142,7 +146,7 @@ class ConfigTab(object):
         #prng_row = HBox([toggle_prng, prng_seed])
 
         self.toggle_svg = Checkbox(
-            description='Cells',    # SVG
+            description='Cells',
             layout=Layout(width='150px') )  # constWidth = '180px'
         # self.svg_t0 = BoundedFloatText (
         #     min=0,
@@ -230,6 +234,7 @@ class ConfigTab(object):
 #                         label_blankline, 
                          HBox([self.tmax, Label('min')]), self.omp_threads,  
                          svg_mat_output_row,
+                         HBox([self.use2D])
 #                         HBox([self.substrate[3], self.diffusion_coef[3], self.decay_rate[3] ]),
                          ])  # output_dir, toggle_2D_seed_
 #                         ], layout=tab_layout)  # output_dir, toggle_2D_seed_
@@ -258,6 +263,11 @@ class ConfigTab(object):
             self.toggle_mcds.value = False
         self.mcds_interval.value = float(xml_root.find(".//full_data//interval").text)
 
+        if xml_root.find(".//use_2D").text.lower() == 'true':
+            self.use2D.value = True
+        else:
+            self.use2D.value = False
+
         # NOTE: do this *after* filling the mcds_interval, directly above, due to the callback/constraints on them
         if xml_root.find(".//SVG//enable").text.lower() == 'true':
             self.toggle_svg.value = True
@@ -281,6 +291,7 @@ class ConfigTab(object):
         xml_root.find(".//z_min").text = str(self.zmin.value)
         xml_root.find(".//z_max").text = str(self.zmax.value)
         xml_root.find(".//dz").text = str(self.zdelta.value)
+        xml_root.find(".//use_2D").text = str(self.use2D.value)
 
         xml_root.find(".//max_time").text = str(self.tmax.value)
 
