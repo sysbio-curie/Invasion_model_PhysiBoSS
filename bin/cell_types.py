@@ -218,12 +218,12 @@ class CellTypesTab(object):
         div_row5.style.button_color = 'orange'
         bnd_filename = Button(description='bnd_filename', disabled=True, layout=name_button_layout)
         bnd_filename.style.button_color = 'tan'
-        self.bnd_filenames[0] = Text(value='../data/boolean_network/Invasion_net_feedback_EMT.bnd', style=style, layout=widget_layout)
+        self.bnd_filenames[0] = Text(value='../data/boolean_network/intracellular_model.bnd', style=style, layout=widget_layout)
         row = [bnd_filename, self.bnd_filenames[0]]
         box17 = Box(children=row, layout=box_layout)
         cfg_filename = Button(description='cfg_filename', disabled=True, layout=name_button_layout)
         cfg_filename.style.button_color = 'lightgreen'
-        self.cfg_filenames[0] = Text(value='../data/boolean_network/Invasion_net_with_FAK.cfg', style=style, layout=widget_layout)
+        self.cfg_filenames[0] = Text(value='../data/boolean_network/intracellular_model.cfg', style=style, layout=widget_layout)
         row = [cfg_filename, self.cfg_filenames[0]]
         box18 = Box(children=row, layout=box_layout)
         time_step = Button(description='time_step', disabled=True, layout=name_button_layout)
