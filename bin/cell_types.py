@@ -235,6 +235,8 @@ class CellTypesTab(object):
         box19 = Box(children=row, layout=box_layout)
 
         # ---------------------------------------------------
+        #INITIAL VALUES
+
         self.bool4 = Checkbox(description='enabled', value=True, layout=name_button_layout)
         intracellular_initial_values = Button(description='initial_values', disabled=True, layout={'width':'30%'})
         intracellular_initial_values.style.button_color = '#ffde6b'
@@ -246,12 +248,10 @@ class CellTypesTab(object):
         time_step = [self.bool4, name_btn, self.float18, units_btn, ]
         box20 = Box(children=time_step, layout=box_layout)
 
-        # ---------------------------------------------------
-
-        intracellular_mutations = Button(description='mutations', disabled=True, layout={'width':'30%'})
-        intracellular_mutations.style.button_color = '#ffde6b'
-        self.bool5 = Checkbox(description='enabled', value=True, layout=name_button_layout)
-        name_btn = Button(description='DNAdamage', disabled=True, layout=name_button_layout)
+        self.bool5 = Checkbox(description='enabled', value=False, layout=name_button_layout)
+        intracellular_initial_values = Button(description='initial_values', disabled=True, layout={'width': '30%'})
+        intracellular_initial_values.style.button_color = '#ffde6b'
+        name_btn = Button(description='ECM', disabled=True, layout=name_button_layout)
         name_btn.style.button_color = 'lightgreen'
         self.float19 = FloatText(value='1', step='0.1', style=style, layout=widget_layout)
         units_btn = Button(description='', disabled=True, layout=name_button_layout)
@@ -259,17 +259,21 @@ class CellTypesTab(object):
         time_step = [self.bool5, name_btn, self.float19, units_btn, ]
         box21 = Box(children=time_step, layout=box_layout)
 
-        self.bool6 = Checkbox(description='enabled', value=True, layout=name_button_layout)
-        name_btn = Button(description='optoSRC', disabled=True, layout=name_button_layout)
+        self.bool6 = Checkbox(description='enabled', value=False, layout=name_button_layout)
+        intracellular_initial_values = Button(description='initial_values', disabled=True, layout={'width': '30%'})
+        intracellular_initial_values.style.button_color = '#ffde6b'
+        name_btn = Button(description='Oxy', disabled=True, layout=name_button_layout)
         name_btn.style.button_color = 'lightgreen'
         self.float20 = FloatText(value='1', step='0.1', style=style, layout=widget_layout)
         units_btn = Button(description='', disabled=True, layout=name_button_layout)
         units_btn.style.button_color = 'lightgreen'
-        time_step = [self.bool6, name_btn, self.float20, units_btn, ]
+        time_step = [self.bool6, name_btn, self.float18, units_btn, ]
         box22 = Box(children=time_step, layout=box_layout)
 
-        self.bool7 = Checkbox(description='enabled', value=True, layout=name_button_layout)
-        name_btn = Button(description='p63', disabled=True, layout=name_button_layout)
+        self.bool7 = Checkbox(description='enabled', value=False, layout=name_button_layout)
+        intracellular_initial_values = Button(description='initial_values', disabled=True, layout={'width': '30%'})
+        intracellular_initial_values.style.button_color = '#ffde6b'
+        name_btn = Button(description='Neigh', disabled=True, layout=name_button_layout)
         name_btn.style.button_color = 'lightgreen'
         self.float21 = FloatText(value='1', step='0.1', style=style, layout=widget_layout)
         units_btn = Button(description='', disabled=True, layout=name_button_layout)
@@ -277,8 +281,10 @@ class CellTypesTab(object):
         time_step = [self.bool7, name_btn, self.float21, units_btn, ]
         box23 = Box(children=time_step, layout=box_layout)
 
-        self.bool8 = Checkbox(description='enabled', value=True, layout=name_button_layout)
-        name_btn = Button(description='MMPs', disabled=True, layout=name_button_layout)
+        self.bool8 = Checkbox(description='enabled', value=False, layout=name_button_layout)
+        intracellular_initial_values = Button(description='initial_values', disabled=True, layout={'width': '30%'})
+        intracellular_initial_values.style.button_color = '#ffde6b'
+        name_btn = Button(description='TGFbeta', disabled=True, layout=name_button_layout)
         name_btn.style.button_color = 'lightgreen'
         self.float22 = FloatText(value='1', step='0.1', style=style, layout=widget_layout)
         units_btn = Button(description='', disabled=True, layout=name_button_layout)
@@ -286,118 +292,205 @@ class CellTypesTab(object):
         time_step = [self.bool8, name_btn, self.float22, units_btn, ]
         box24 = Box(children=time_step, layout=box_layout)
 
+        self.bool9 = Checkbox(description='enabled', value=False, layout=name_button_layout)
+        intracellular_initial_values = Button(description='initial_values', disabled=True, layout={'width': '30%'})
+        intracellular_initial_values.style.button_color = '#ffde6b'
+        name_btn = Button(description='DNAdamage', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'lightgreen'
+        self.float23 = FloatText(value='1', step='0.1', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'lightgreen'
+        time_step = [self.bool9, name_btn, self.float23, units_btn, ]
+        box25 = Box(children=time_step, layout=box_layout)
+
+        # ---------------------------------------------------
+        #MUTATIONS
+
+        intracellular_mutations = Button(description='mutations', disabled=True, layout={'width':'30%'})
+        intracellular_mutations.style.button_color = '#ffde6b'
+        self.bool10 = Checkbox(description='enabled', value=False, layout=name_button_layout)
+        name_btn = Button(description='CTNNB1', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'lightgreen'
+        self.float24 = FloatText(value='1', step='0.1', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'lightgreen'
+        time_step = [self.bool10, name_btn, self.float24, units_btn, ]
+        box26 = Box(children=time_step, layout=box_layout)
+
+        self.bool11 = Checkbox(description='enabled', value=False, layout=name_button_layout)
+        name_btn = Button(description='p53', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'lightgreen'
+        self.float25 = FloatText(value='1', step='0.1', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'lightgreen'
+        time_step = [self.bool11, name_btn, self.float25, units_btn, ]
+        box27 = Box(children=time_step, layout=box_layout)
+
+        self.bool12 = Checkbox(description='enabled', value=False, layout=name_button_layout)
+        name_btn = Button(description='p63', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'lightgreen'
+        self.float26 = FloatText(value='1', step='0.1', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'lightgreen'
+        time_step = [self.bool12, name_btn, self.float26, units_btn, ]
+        box28 = Box(children=time_step, layout=box_layout)
+
+        self.bool13 = Checkbox(description='enabled', value=False, layout=name_button_layout)
+        name_btn = Button(description='MMPs', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'lightgreen'
+        self.float27 = FloatText(value='1', step='0.1', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'lightgreen'
+        time_step = [self.bool13, name_btn, self.float27, units_btn, ]
+        box29 = Box(children=time_step, layout=box_layout)
+
+        self.bool14 = Checkbox(description='enabled', value=False, layout=name_button_layout)
+        name_btn = Button(description='p73', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'lightgreen'
+        self.float28 = FloatText(value='1', step='0.1', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'lightgreen'
+        time_step = [self.bool14, name_btn, self.float28, units_btn, ]
+        box30 = Box(children=time_step, layout=box_layout)
+
+        self.bool15 = Checkbox(description='enabled', value=False, layout=name_button_layout)
+        name_btn = Button(description='miR34', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'lightgreen'
+        self.float29 = FloatText(value='1', step='0.1', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'lightgreen'
+        time_step = [self.bool15, name_btn, self.float29, units_btn, ]
+        box31 = Box(children=time_step, layout=box_layout)
+
+        self.bool16 = Checkbox(description='enabled', value=False, layout=name_button_layout)
+        name_btn = Button(description='AKT1', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'lightgreen'
+        self.float30 = FloatText(value='1', step='0.1', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'lightgreen'
+        time_step = [self.bool16, name_btn, self.float30, units_btn, ]
+        box32 = Box(children=time_step, layout=box_layout)
+
+        self.bool17 = Checkbox(description='enabled', value=False, layout=name_button_layout)
+        name_btn = Button(description='ERK', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'lightgreen'
+        self.float31 = FloatText(value='1', step='0.1', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'lightgreen'
+        time_step = [self.bool17, name_btn, self.float31, units_btn, ]
+        box33 = Box(children=time_step, layout=box_layout)
+
 #      ================== <custom_data>, if present ==================
 
         div_row6 = Button(description='Custom Data',disabled=True, layout=divider_button_layout)
         div_row6.style.button_color = 'cyan'
         name_btn = Button(description='pintegrin', disabled=True, layout=name_button_layout)
         name_btn.style.button_color = 'tan'
-        self.float23 = FloatText(value='0', step='0.01', style=style, layout=widget_layout)
+        self.float32 = FloatText(value='0', step='0.01', style=style, layout=widget_layout)
         units_btn = Button(description='', disabled=True, layout=name_button_layout)
         units_btn.style.button_color = 'tan'
         description_btn = Button(description='', disabled=True, layout=desc_button_layout)
         description_btn.style.button_color = 'tan'
-        row = [name_btn, self.float23, units_btn, description_btn]
-
-        box25 = Box(children=row, layout=box_layout)
-        name_btn = Button(description='integrin', disabled=True, layout=name_button_layout)
-        name_btn.style.button_color = 'lightgreen'
-        self.float24 = FloatText(value='0.1', step='0.01', style=style, layout=widget_layout)
-        units_btn = Button(description='', disabled=True, layout=name_button_layout)
-        units_btn.style.button_color = 'lightgreen'
-        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
-        description_btn.style.button_color = 'lightgreen'
-        row = [name_btn, self.float24, units_btn, description_btn]
-
-        box26 = Box(children=row, layout=box_layout)
-        name_btn = Button(description='pmotility', disabled=True, layout=name_button_layout)
-        name_btn.style.button_color = 'tan'
-        self.float25 = FloatText(value='0.1', step='0.01', style=style, layout=widget_layout)
-        units_btn = Button(description='', disabled=True, layout=name_button_layout)
-        units_btn.style.button_color = 'tan'
-        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
-        description_btn.style.button_color = 'tan'
-        row = [name_btn, self.float25, units_btn, description_btn]
-
-        box27 = Box(children=row, layout=box_layout)
-        name_btn = Button(description='padhesion', disabled=True, layout=name_button_layout)
-        name_btn.style.button_color = 'lightgreen'
-        self.float26 = FloatText(value='0.1', step='0.01', style=style, layout=widget_layout)
-        units_btn = Button(description='', disabled=True, layout=name_button_layout)
-        units_btn.style.button_color = 'lightgreen'
-        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
-        description_btn.style.button_color = 'lightgreen'
-        row = [name_btn, self.float26, units_btn, description_btn]
-
-        box28 = Box(children=row, layout=box_layout)
-        name_btn = Button(description='nucleus_deform', disabled=True, layout=name_button_layout)
-        name_btn.style.button_color = 'tan'
-        self.float27 = FloatText(value='0', step='0.01', style=style, layout=widget_layout)
-        units_btn = Button(description='', disabled=True, layout=name_button_layout)
-        units_btn.style.button_color = 'tan'
-        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
-        description_btn.style.button_color = 'tan'
-        row = [name_btn, self.float27, units_btn, description_btn]
-
-        box29 = Box(children=row, layout=box_layout)
-        name_btn = Button(description='ecm_contact', disabled=True, layout=name_button_layout)
-        name_btn.style.button_color = 'lightgreen'
-        self.float28 = FloatText(value='0', step='0.01', style=style, layout=widget_layout)
-        units_btn = Button(description='', disabled=True, layout=name_button_layout)
-        units_btn.style.button_color = 'lightgreen'
-        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
-        description_btn.style.button_color = 'lightgreen'
-        row = [name_btn, self.float28, units_btn, description_btn]
-
-        box30 = Box(children=row, layout=box_layout)
-        name_btn = Button(description='TGFbeta_contact', disabled=True, layout=name_button_layout)
-        name_btn.style.button_color = 'tan'
-        self.float29 = FloatText(value='0', step='0.01', style=style, layout=widget_layout)
-        units_btn = Button(description='', disabled=True, layout=name_button_layout)
-        units_btn.style.button_color = 'tan'
-        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
-        description_btn.style.button_color = 'tan'
-        row = [name_btn, self.float29, units_btn, description_btn]
-
-        box31 = Box(children=row, layout=box_layout)
-        name_btn = Button(description='cell_contact', disabled=True, layout=name_button_layout)
-        name_btn.style.button_color = 'lightgreen'
-        self.float30 = FloatText(value='0.6', step='0.1', style=style, layout=widget_layout)
-        units_btn = Button(description='', disabled=True, layout=name_button_layout)
-        units_btn.style.button_color = 'lightgreen'
-        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
-        description_btn.style.button_color = 'lightgreen'
-        row = [name_btn, self.float30, units_btn, description_btn]
-
-        box32 = Box(children=row, layout=box_layout)
-        name_btn = Button(description='freezed', disabled=True, layout=name_button_layout)
-        name_btn.style.button_color = 'tan'
-        self.float31 = FloatText(value='0', step='0.01', style=style, layout=widget_layout)
-        units_btn = Button(description='', disabled=True, layout=name_button_layout)
-        units_btn.style.button_color = 'tan'
-        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
-        description_btn.style.button_color = 'tan'
-        row = [name_btn, self.float31, units_btn, description_btn]
-
-        box33 = Box(children=row, layout=box_layout)
-        name_btn = Button(description='passive', disabled=True, layout=name_button_layout)
-        name_btn.style.button_color = 'lightgreen'
-        self.float32 = FloatText(value='1', step='0.1', style=style, layout=widget_layout)
-        units_btn = Button(description='', disabled=True, layout=name_button_layout)
-        units_btn.style.button_color = 'lightgreen'
-        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
-        description_btn.style.button_color = 'lightgreen'
         row = [name_btn, self.float32, units_btn, description_btn]
 
         box34 = Box(children=row, layout=box_layout)
+        name_btn = Button(description='integrin', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'lightgreen'
+        self.float33 = FloatText(value='0.1', step='0.01', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'lightgreen'
+        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
+        description_btn.style.button_color = 'lightgreen'
+        row = [name_btn, self.float33, units_btn, description_btn]
+
+        box35 = Box(children=row, layout=box_layout)
+        name_btn = Button(description='pmotility', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'tan'
+        self.float34 = FloatText(value='0.1', step='0.01', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'tan'
+        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
+        description_btn.style.button_color = 'tan'
+        row = [name_btn, self.float34, units_btn, description_btn]
+
+        box36 = Box(children=row, layout=box_layout)
+        name_btn = Button(description='padhesion', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'lightgreen'
+        self.float35 = FloatText(value='0.1', step='0.01', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'lightgreen'
+        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
+        description_btn.style.button_color = 'lightgreen'
+        row = [name_btn, self.float35, units_btn, description_btn]
+
+        box37 = Box(children=row, layout=box_layout)
+        name_btn = Button(description='nucleus_deform', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'tan'
+        self.float36 = FloatText(value='0', step='0.01', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'tan'
+        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
+        description_btn.style.button_color = 'tan'
+        row = [name_btn, self.float36, units_btn, description_btn]
+
+        box38 = Box(children=row, layout=box_layout)
+        name_btn = Button(description='ecm_contact', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'lightgreen'
+        self.float37 = FloatText(value='0', step='0.01', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'lightgreen'
+        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
+        description_btn.style.button_color = 'lightgreen'
+        row = [name_btn, self.float37, units_btn, description_btn]
+
+        box39 = Box(children=row, layout=box_layout)
+        name_btn = Button(description='TGFbeta_contact', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'tan'
+        self.float38 = FloatText(value='0', step='0.01', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'tan'
+        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
+        description_btn.style.button_color = 'tan'
+        row = [name_btn, self.float38, units_btn, description_btn]
+
+        box40 = Box(children=row, layout=box_layout)
+        name_btn = Button(description='cell_contact', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'lightgreen'
+        self.float39 = FloatText(value='0.6', step='0.1', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'lightgreen'
+        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
+        description_btn.style.button_color = 'lightgreen'
+        row = [name_btn, self.float39, units_btn, description_btn]
+
+        box41 = Box(children=row, layout=box_layout)
+        name_btn = Button(description='freezed', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'tan'
+        self.float40 = FloatText(value='0', step='0.01', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'tan'
+        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
+        description_btn.style.button_color = 'tan'
+        row = [name_btn, self.float40, units_btn, description_btn]
+
+        box42 = Box(children=row, layout=box_layout)
+        name_btn = Button(description='passive', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'lightgreen'
+        self.float41 = FloatText(value='1', step='0.1', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'lightgreen'
+        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
+        description_btn.style.button_color = 'lightgreen'
+        row = [name_btn, self.float41, units_btn, description_btn]
+
+        box43 = Box(children=row, layout=box_layout)
 
         self.cell_def_vbox0 = VBox([
-          div_row1, box0, box1, div_row2, death_model1,box2, death_model2,box3, box4, box5, box6, box7, box8, box9, div_row3, box10, box11, box12, box13, div_row4, box14,box15,box16,self.bool2,self.bool3,div_row5, box17,box18,box19,intracellular_initial_values,box20, intracellular_mutations,          box21,
+          div_row1, box0, box1, div_row2, death_model1,box2, death_model2,box3, box4, box5, box6, box7, box8, box9, div_row3, box10, box11, box12, box13, div_row4, box14,box15,box16,self.bool2,self.bool3,div_row5, box17,box18,box19,intracellular_initial_values,box20, box21,
           box22,
           box23,
           box24,
-          div_row6,
-          box25,
+          box25, intracellular_mutations,
           box26,
           box27,
           box28,
@@ -405,8 +498,10 @@ class CellTypesTab(object):
           box30,
           box31,
           box32,
-          box33,
-          box34
+          box33, div_row6,
+          box34,
+          box35,
+          box36, box37, box38, box39, box40, box41, box42, box43
         ])
         # ------------------------------------------
         self.cell_def_vboxes.append(self.cell_def_vbox0)
@@ -485,35 +580,60 @@ self.cell_def_vbox0,         ])
         self.bnd_filenames[0].value = uep.find('.//cell_definition[1]//phenotype//intracellular//bnd_filename').text
         self.cfg_filenames[0].value = uep.find('.//cell_definition[1]//phenotype//intracellular//cfg_filename').text
         self.float17.value = float(uep.find('.//cell_definition[1]//phenotype//intracellular//time_step').text)
-        self.float18.value = float(uep.find('.//cell_definition[1]//phenotype//intracellular//initial_values//initial_value[1]').text)
 
-        if uep.find('.//cell_definition[1]//phenotype//intracellular//mutations//mutation[1]') is not None:
-            # checking the box
-            self.bool5.value = True
-            # write the value
-            self.float19.value = float(
-                uep.find('.//cell_definition[1]//phenotype//intracellular//mutations//mutation[1]').text)
+        init_values = uep.find('.//cell_definition[1]//phenotype//intracellular//initial_values')
 
-        if uep.find('.//cell_definition[1]//phenotype//intracellular//mutations//mutation[2]') is not None:
-            # checking the box
-            self.bool6.value = True
-            # write the value
-            self.float20.value = float(
-                uep.find('.//cell_definition[1]//phenotype//intracellular//mutations//mutation[2]').text)
+        for value in init_values:
+            if value.get('node') == 'GF':
+                self.bool4.value = True
+                self.float18.value = float(value.text)
+            elif value.get('node') == 'ECM':
+                self.bool5.value = True
+                self.float19.value = float(value.text)
+            elif value.get('node') == 'Oxy':
+                self.bool6.value = True
+                self.float20.value = float(value.text)
+            elif value.get('node') == 'Neigh':
+                self.bool7.value = True
+                self.float21.value = float(value.text)
+            elif value.get('node') == 'TGFbeta':
+                self.bool8.value = True
+                self.float22.value = float(value.text)
+            elif value.get('node') == 'DNAdamage':
+                self.bool9.value = True
+                self.float23.value = float(value.text)
 
-        if uep.find('.//cell_definition[1]//phenotype//intracellular//mutations//mutation[3]') is not None:
-            # checking the box
-            self.bool7.value = True
-            # write the value
-            self.float21.value = float(
-                uep.find('.//cell_definition[1]//phenotype//intracellular//mutations//mutation[3]').text)
+        ##### MUTATIONS
 
-        if uep.find('.//cell_definition[1]//phenotype//intracellular//mutations//mutation[4]') is not None:
-            # checking the box
-            self.bool8.value = True
-            # write the value
-            self.float22.value = float(
-                uep.find('.//cell_definition[1]//phenotype//intracellular//mutations//mutation[4]').text)
+        mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
+
+        for mutation in mutations:
+            if mutation.get('node') == 'CTNNB1':
+                self.bool10.value = True
+                self.float24.value = float(value.text)
+            elif mutation.get('node') == 'p53':
+                self.bool11.value = True
+                self.float25.value = float(value.text)
+            elif mutation.get('node') == 'p63':
+                self.bool12.value = True
+                self.float26.value = float(value.text)
+            elif mutation.get('node') == 'p73':
+                self.bool14.value = True
+                self.float28.value = float(value.text)
+            elif mutation.get('node') == 'AKT1':
+                self.bool16.value = True
+                self.float30.value = float(value.text)
+            elif mutation.get('node') == 'MMPs':
+                self.bool13.value = True
+                self.float27.value = float(value.text)
+            elif mutation.get('node') == 'miR34':
+                self.bool15.value = True
+                self.float29.value = float(value.text)
+            elif mutation.get('node') == 'ERK':
+                self.bool17.value = True
+                self.float31.value = float(value.text)
+
+        # to add custom data  self.float32.value = float(uep.find('.//cell_definition[1]//phenotype//customdata//pintegrin').text)
 
 
     # Read values from the GUI widgets to enable editing XML
@@ -548,13 +668,103 @@ self.cell_def_vbox0,         ])
         uep.find('.//cell_definition[1]//phenotype//intracellular//bnd_filename').text = str(self.bnd_filenames[0].value)
         uep.find('.//cell_definition[1]//phenotype//intracellular//cfg_filename').text = str(self.cfg_filenames[0].value)
         uep.find('.//cell_definition[1]//phenotype//intracellular//time_step').text = str(self.float17.value)
+
+        #INITIAL VALUES
+
+        if self.bool4.value == True:
+            init_values = uep.find('.//cell_definition[1]//phenotype//intracellular//initial_values')
+            ET.SubElement(init_values, "initial_value", node="GF").text = str(self.float18.value)
+        else:
+            init_values = uep.find('.//cell_definition[1]//phenotype//intracellular//initial_values')
+            for value in init_values:
+                if value.get('node') == 'GF':
+                    #print('found optoSRC !')
+                    init_values.remove(value)
+                    break
+                else:
+                    continue
+                    #print('there is no optoSRC!')
+
+
         if self.bool5.value == True:
+            init_values = uep.find('.//cell_definition[1]//phenotype//intracellular//initial_values')
+            ET.SubElement(init_values, "initial_value", node="ECM").text = str(self.float19.value)
+        else:
+            init_values = uep.find('.//cell_definition[1]//phenotype//intracellular//initial_values')
+            for value in init_values:
+                if value.get('node') == 'ECM':
+                    #print('found optoSRC !')
+                    init_values.remove(value)
+                    break
+                else:
+                    continue
+                    #print('there is no optoSRC!')
+
+        if self.bool6.value == True:
+            init_values = uep.find('.//cell_definition[1]//phenotype//intracellular//initial_values')
+            ET.SubElement(init_values, "initial_value", node="Oxy").text = str(self.float20.value)
+        else:
+            init_values = uep.find('.//cell_definition[1]//phenotype//intracellular//initial_values')
+            for value in init_values:
+                if value.get('node') == 'Oxy':
+                    #print('found optoSRC !')
+                    init_values.remove(value)
+                    break
+                else:
+                    continue
+                    #print('there is no optoSRC!')
+
+        if self.bool7.value == True:
+            init_values = uep.find('.//cell_definition[1]//phenotype//intracellular//initial_values')
+            ET.SubElement(init_values, "initial_value", node="Neigh").text = str(self.float21.value)
+        else:
+            init_values = uep.find('.//cell_definition[1]//phenotype//intracellular//initial_values')
+            for value in init_values:
+                if value.get('node') == 'Neigh':
+                    #print('found optoSRC !')
+                    init_values.remove(value)
+                    break
+                else:
+                    continue
+                    #print('there is no optoSRC!')
+
+        if self.bool8.value == True:
+            init_values = uep.find('.//cell_definition[1]//phenotype//intracellular//initial_values')
+            ET.SubElement(init_values, "initial_value", node="TGFbeta").text = str(self.float22.value)
+        else:
+            init_values = uep.find('.//cell_definition[1]//phenotype//intracellular//initial_values')
+            for value in init_values:
+                if value.get('node') == 'TGFbeta':
+                    #print('found optoSRC !')
+                    init_values.remove(value)
+                    break
+                else:
+                    continue
+                    #print('there is no optoSRC!')
+
+        if self.bool9.value == True:
+            init_values = uep.find('.//cell_definition[1]//phenotype//intracellular//initial_values')
+            ET.SubElement(init_values, "initial_value", node="DNAdamage").text = str(self.float23.value)
+        else:
+            init_values = uep.find('.//cell_definition[1]//phenotype//intracellular//initial_values')
+            for value in init_values:
+                if value.get('node') == 'DNAdamage':
+                    #print('found optoSRC !')
+                    init_values.remove(value)
+                    break
+                else:
+                    continue
+                    #print('there is no optoSRC!')
+
+        #MUTATIONS
+
+        if self.bool10.value == True:
             mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
-            ET.SubElement(mutations, "mutation", node="DNAdamage").text = str(self.float19.value)
+            ET.SubElement(mutations, "mutation", node="CTNNB1").text = str(self.float24.value)
         else:
             mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
             for mutation in mutations:
-                if mutation.get('node') == 'DNAdamage':
+                if mutation.get('node') == 'CTNNB1':
                     #print('found DNAdamage !')
                     mutations.remove(mutation)
                     break
@@ -563,13 +773,13 @@ self.cell_def_vbox0,         ])
                     #print('there is no DNAdamage!')
 
 
-        if self.bool6.value == True:
+        if self.bool11.value == True:
             mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
-            ET.SubElement(mutations, "mutation", node="optoSRC").text = str(self.float20.value)
+            ET.SubElement(mutations, "mutation", node="p53").text = str(self.float25.value)
         else:
             mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
             for mutation in mutations:
-                if mutation.get('node') == 'optoSRC':
+                if mutation.get('node') == 'p53':
                     #print('found optoSRC !')
                     mutations.remove(mutation)
                     break
@@ -577,9 +787,9 @@ self.cell_def_vbox0,         ])
                     continue
                     #print('there is no optoSRC!')
 
-        if self.bool7.value == True:
+        if self.bool12.value == True:
             mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
-            ET.SubElement(mutations, "mutation", node="p63").text = str(self.float21.value)
+            ET.SubElement(mutations, "mutation", node="p63").text = str(self.float26.value)
         else:
             #print('Noooo!')
             mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
@@ -593,9 +803,9 @@ self.cell_def_vbox0,         ])
                     #print('there is no p63!')
 
 
-        if self.bool8.value == True:
+        if self.bool13.value == True:
             mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
-            ET.SubElement(mutations, "mutation", node="MMPs").text = str(self.float22.value)
+            ET.SubElement(mutations, "mutation", node="MMPs").text = str(self.float27.value)
         else:
             #print('Noooo!')
             mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
@@ -608,5 +818,61 @@ self.cell_def_vbox0,         ])
                     continue
                     #print('there is no MMPs!')
 
+        if self.bool14.value == True:
+            mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
+            ET.SubElement(mutations, "mutation", node="p73").text = str(self.float28.value)
+        else:
+            mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
+            for mutation in mutations:
+                if mutation.get('node') == 'p73':
+                    #print('found optoSRC !')
+                    mutations.remove(mutation)
+                    break
+                else:
+                    continue
+                    #print('there is no optoSRC!')
 
-        uep.find('.//cell_definition[1]//phenotype//intracellular//initial_values//initial_value[1]').text = str(self.float18.value)
+        if self.bool15.value == True:
+            mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
+            ET.SubElement(mutations, "mutation", node="miR34").text = str(self.float29.value)
+        else:
+            mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
+            for mutation in mutations:
+                if mutation.get('node') == 'miR34':
+                    #print('found optoSRC !')
+                    mutations.remove(mutation)
+                    break
+                else:
+                    continue
+                    #print('there is no optoSRC!')
+
+        if self.bool16.value == True:
+            mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
+            ET.SubElement(mutations, "mutation", node="AKT1").text = str(self.float30.value)
+        else:
+            mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
+            for mutation in mutations:
+                if mutation.get('node') == 'AKT1':
+                    #print('found optoSRC !')
+                    mutations.remove(mutation)
+                    break
+                else:
+                    continue
+                    #print('there is no optoSRC!')
+
+        if self.bool17.value == True:
+            mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
+            ET.SubElement(mutations, "mutation", node="ERK").text = str(self.float31.value)
+        else:
+            mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
+            for mutation in mutations:
+                if mutation.get('node') == 'ERK':
+                    #print('found optoSRC !')
+                    mutations.remove(mutation)
+                    break
+                else:
+                    continue
+                    #print('there is no optoSRC!')
+
+
+

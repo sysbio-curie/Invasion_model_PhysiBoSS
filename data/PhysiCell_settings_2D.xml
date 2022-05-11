@@ -240,8 +240,6 @@
 						<initial_value node="GF">1</initial_value>
 					</initial_values>
 					<mutations>
-						<mutation node="DNAdamage">1</mutation>
-						<mutation node="optoSRC">1</mutation>
 						<mutation node="p63">1</mutation>
 						<mutation node="MMPs">1</mutation>
 					</mutations>
