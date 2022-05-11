@@ -498,11 +498,14 @@ class CellTypesTab(object):
           box30,
           box31,
           box32,
-          box33, div_row6,
-          box34,
-          box35,
-          box36, box37, box38, box39, box40, box41, box42, box43
+          box33
         ])
+
+        # custom data: div_row6,
+        #           box34,
+        #           box35,
+        #           box36, box37, box38, box39, box40, box41, box42, box43
+
         # ------------------------------------------
         self.cell_def_vboxes.append(self.cell_def_vbox0)
 
