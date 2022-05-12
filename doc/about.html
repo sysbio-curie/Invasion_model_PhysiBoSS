@@ -1,36 +1,79 @@
+<h2 id="about"><strong>PhysiBoSS Multiscale model of the different modes of invasion</strong></h2>
+<p>The goal of the model is to simulate the different modes of cancer cell invasion: Collective, Single and Trail migration. This model integrates a boolean model of cancer invasion for each agent, which determine the phenotype of the cell according to the stimuli received from the microenvironment or other cells.
+Is it possible to change several parameters to switch from one invasion mode to another. In the cell types tab, is possible to change the initial conditions for all the cells as well as trigger
+mutations (knock-out or overexpression) to replicate in vitro experiments. (<a href="#model_details">see below</a>). </p>
+
+<p><b>Please note that this is a stochastic model: for some simulation runs, you may see the immune system fail to respond. Users are encouraged to try the simulation multiple times.</b></p>
+
+<p>
+    Please cite this project via: 
+</p>
+<p style="text-align: center;">
+    M. Ruscone al., Multiscale model of the different modes of invasion 
+</p>
+
+<p><strong>Legend:</strong></b>
+<ul>
+
+<strong>Color by node:</strong>
+<ul style="font-family: courier;">
+<!--
+<li><span style="font-weight: strong; background-color: rgb(0,0,255)"    >dark blue----:</span> Cells with 0 assembled virions. </li>
+<li><span style="font-weight: strong; background-color: rgb(64,64,199)"  >pale blue----:</span> Cells with 1-9 assembled virions. </li>
+<li><span style="font-weight: strong; background-color: rgb(128,128,128)">grey---------:</span> Cells with 10-99 assembled virions. </li>
+<li><span style="font-weight: strong; background-color: rgb(199,199,64)" >light yellow-:</span> Cells with 100-999 assembled virions. </li>
+<li><span style="font-weight: strong; background-color: rgb(255,255,0)"  >bright yellow:</span> Cells with 1000+ assembled virions. </li>
+-->
+<li><span style="height: 25px; width: 25px; background-color: red; display: inline-block; border-radius: 50%; border: 1px solid black;"></span> Node OFF</li>
+<li><span style="height: 25px; width: 25px; background-color: green; display: inline-block; border-radius: 50%; border: 1px solid black;"></span> Node ON</li>
+</ul>
+
+<br/>
+
+<li><strong>Color by cell cycle<sup>+</sup> T cells:</strong> are colored by their cell cycle status </li>
+<ul style="font-family: courier;">
+<li><span style="height: 25px; width: 25px; background-color: green; display: inline-block; border-radius: 50%; border: 1px solid black;"></span> Ki-67- (interphase)</li>
+<li><span style="height: 25px; width: 25px; background-color: yellow; display: inline-block; border-radius: 50%; border: 1px solid black;"></span> Ki-67+ (pre-mitotic)</li>
+<li><span style="height: 25px; width: 25px; background-color: red; display: inline-block; border-radius: 50%; border: 1px solid black;"></span> Ki-67+ (post-mitotic)</li>
+<li><span style="height: 25px; width: 25px; background-color: black; display: inline-block; border-radius: 50%; border: 1px solid black;"></span> Apoptotic</li>
+</ul>
+
+<br/>
+
+<li><strong>Background:</strong> Extracellular Matrix, TGFbeta, Oxygen, light.
+</li>
+
+</ul>
+
+
+<h3 style="color: red; font-weight: strong">Caveats and disclaimers</h3>
+<strong>This model is under active development using rapid prototyping:</strong>
+<ul>
+<li>It has not been peer reviewed. </li>
+<li>It is intended to drive basic scientific research and public education at this stage.</li>
+<li><strong>It cannot be used for public policy decisions. </strong></li>
+<li><strong>It cannot be used for individual medical decisions.</strong></li>
+</ul>
+
+
 <h2 id="GUI_overview"><strong>GUI Overview</strong></h2>
 <ul>
-    <li><b>Config Basics</b> tab:&nbsp;&nbsp;&nbsp;  input parameters common to all models (e.g., domain grid, simulation time, choice/frequency of outputs)</li>
-    <li><b>Microenvironment</b> tab:&nbsp;&nbsp; microenvironment parameters that are model-specific</li>
-    <li><b>User Params</b> tab:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; user parameters that are model-specific</li>
-    <li><b>Cell Types</b> tab:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; parameters for cell types that are model-specific</li>
-    <li><b>Out: Plots</b> tab:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; output display of cells and substrates</li>
-    <li><b>Out: PhysiBoSS</b> tab:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; output display of cells intracellular states</li>
-    <li><b>Animate</b> tab:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; generate an animation of cells</li>
+<li><b>Config Basics</b> tab:&nbsp;&nbsp;&nbsp;  input parameters common to all models (e.g., domain grid, simulation time, choice/frequency of outputs)</li>
+<li><b>Microenvironment</b> tab:&nbsp;&nbsp; microenvironment parameters that are model-specific</li>
+<li><b>User Params</b> tab:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; user parameters that are model-specific</li>
+<li><b>Cell Types</b> tab:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; parameters for cell types that are model-specific</li>
+<li><b>Out: Plots</b> tab:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; output display of cells and substrates</li>
+<li><b>Animate</b> tab:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; generate an animation of cells</li>
 </ul>
 Clicking the 'Run' button will use the specified parameters and start a simulation. When clicked, it creates an "Output" widget
-that can be clicked/expanded to reveal the progress (text) of the simulation. When the simulation generates output files,
+that can be clicked/expanded to reveal the progress of the simulation. When the simulation generates output files,
 they can be visualized in the "Out: Plots" tab. The "# cell frames" will be dynamically updated 
 as those output files are generated by the running simulation. When the "Run" button is clicked, it toggles to a "Cancel" button
 that will terminate (not pause) the simulation.
 
-<h2><strong>Introduction</strong></h2>
-
-<p>
-This app demonstrates ... 
-</p>
-
-
-<p>This model and cloud-hosted demo are part of a course on computational multicellular systems biology created and taught by 
-    Dr. Paul Macklin in the Department of Intelligent Systems Engineering at Indiana University. It is also part of the education 
-    and outreach for the IU Engineered nanoBIO Node and the NCI-funded cancer systems biology grant U01CA232137. 
-    The models are built using <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005991" target="_blank">PhysiCell</a>: 
-    a C++ framework for multicellular systems biology [1].</p>
-
-
 <h2><a id="instructions" name="instructions">Basic instructions</a></h2>
 
-<p>Modify parameters in the &quot;Config Basics&quot;, &quot;Microenvironment&quot;, or &quot;User Params&quot; tabs. Click the &quot;Run&quot; button once you are ready.</p>
+<p>Modify parameters in the &quot;Config Basics&quot;, &quot;Microenvironment&quot;, &quot;User Params&quot;, or &quot;Cell Types&quot; tabs. Click the &quot;Run&quot; button once you are ready.</p>
 
 <p>To view the output results, click the &quot;Out: Plots&quot; tab, and move the slider bar to advance through simulation frames. 
 Note that as the simulation runs, the &quot;# cell frames&quot; field will increase, so you can view more simulation frames.</p>
@@ -48,8 +91,14 @@ This model and cloud-hosted demo are part of the education and outreach
 
 <ol>
 <li>
+<a href="https://academic.oup.com/bioinformatics/article/35/7/1188/5087713">G. Letort, A. Montagud, G. Stoll, R. Heiland, E. Barillot, P. Macklin, A. Zinovyev, L. Calzone, PhysiBoSS: a multi-scale agent-based modelling framework integrating physical dimension and cell signalling, Bioinformatics, Volume 35, Issue 7, 01 April 2019, Pages 1188–1196, https://doi.org/10.1093/bioinformatics/bty766</a> </li>        
+</li>
+<li>
 <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005991">A. Ghaffarizadeh, R. Heiland, S.H. Friedman, S.M. Mumenthaler, and P. Macklin. PhysiCell: an open source physics-based cell simulator for 3-D multicellular systems. PLoS Comput. Biol. 14(2):e1005991, 2018. DOI: 10.1371/journal.pcbi.1005991.</a> </li>
 <li>
-<a href="https://joss.theoj.org/papers/10.21105/joss.01408">R. Heiland, D. Mishler, T. Zhang, E. Bower, and P. Macklin. xml2jupyter: Mapping parameters between XML and Jupyter widgets. Journal of Open Source Software 4(39):1408, 2019. DOI: 10.21105/joss.01408.
-</li>
+<a href="https://joss.theoj.org/papers/10.21105/joss.01408">R. Heiland, D. Mishler, T. Zhang, E. Bower, and P. Macklin. xml2jupyter: Mapping parameters between XML and Jupyter widgets. Journal of Open Source Software 4(39):1408, 2019. DOI: 10.21105/joss.01408. </a> </li>
+<li>
+<a href="https://pubmed.ncbi.nlm.nih.gov/25893299/">Lodillinsky C, Infante E, Guichard A, et al. p63/MT1-MMP axis is required for in situ to invasive transition in basal-like breast cancer. Oncogene. 2016;35(3):344-357. doi:10.1038/onc.2015.87 </a> </li>
+<li>
+<a href="https://www.nature.com/articles/s42005-019-0198-5">Moitrier, S., Pricoupenko, N., Kerjouan, A. et al. Local light-activation of the Src oncoprotein in an epithelial monolayer promotes collective extrusion. Commun Phys 2, 98 (2019). </a> </li>
 </ol>
