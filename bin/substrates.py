@@ -968,7 +968,7 @@ class SubstrateTab(object):
                 states_reader = csv.reader(csvfile, delimiter=',')
                     
                 for row in states_reader:
-                    if row[0] != 'ID' and int(row[0]):
+                    if row[0] != 'ID':
                         nodes = row[1].split(" -- ")
                         states_dict[int(row[0])] = nodes
 
