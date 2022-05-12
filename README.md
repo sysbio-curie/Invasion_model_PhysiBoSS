@@ -6,7 +6,6 @@ This simulation is an example of how boolean models can be integrated into Paul 
 
 ### Run locally with Docker and Docker-compose
 ```
-
 git clone https://github.com/marcorusc/Invasion_GUI
 cd Invasion_GUI
 docker-compose up -d
@@ -16,7 +15,6 @@ And then open your browser to this url : http://localhost:8888/notebooks/Invasio
 
 ### Run locally with Docker
 ```
-
 git clone https://github.com/marcorusc/Invasion_GUI
 cd Invasion_GUI
 docker build -t Invasion_GUI .
