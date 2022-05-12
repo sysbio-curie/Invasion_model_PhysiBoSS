@@ -2,7 +2,7 @@ This simulation is an example of how boolean models can be integrated into Paul 
 
 ### Run in nanoHUB : work in progress
 
-### Run in Binder : Binder
+### Run in Binder : [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcorusc/Invasion_GUI/HEAD)
 
 ### Run locally with Docker and Docker-compose
 
