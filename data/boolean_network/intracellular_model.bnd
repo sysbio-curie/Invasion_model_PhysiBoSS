@@ -77,7 +77,7 @@ Node ECM_degrad {
 // MMP activation requires physical contat with the ECM and EMT activation + p63 comes from Chavrier's experiments
 
 Node MMPs {
-  logic =  ((NICD & EMT & SMAD)| p63 | RAC1) & !p73;
+  logic = ( MMPs & (((NICD & SMAD)| RAC1) & !p73) ) | p63 ;
   rate_up = @logic ? $u_MMPs : 0.0;
   rate_down = @logic ? 0.0 : $d_MMPs;
 }
@@ -90,11 +90,10 @@ Node optoSRC {
 
 // Directed interactions from Signor Adhesome
 Node SRC {
-  logic = (FAK | optoSRC);
+  logic = FAK | optoSRC | (FAK & optoSRC);
   rate_up = @logic ? $u_SRC : 0.0;
   rate_down = @logic ? 0.0 : $d_SRC;
 }
-
 Node Neigh {
   logic = (Neigh);
   rate_up = @logic ? $u_Neigh : 0.0;
@@ -269,7 +268,7 @@ Node VIM {
 }
 
 Node EMT {
-  logic = (((!CDH1 & CDH2) | EMT) & !p53 & !miR203 & !miR200) ;
+  logic = (!CDH1 & CDH2) | EMT & (!CDH1 & CDH2) ;
   rate_up = @logic ? $u_EMT : 0.0;
   rate_down = @logic ? 0.0 : $d_EMT;
 }

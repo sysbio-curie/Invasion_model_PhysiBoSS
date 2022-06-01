@@ -191,4 +191,5 @@ void custom_update_velocity( Cell* pCell, Phenotype& phenotype, double dt);
 int feel_enough(std::string field, Cell* pCell);
 void start_SRC_mutation(bool light_on);
 bool sense_light(Cell* pCell);
+void save_cells_net(std::string filename, std::vector<PhysiCell::Cell*>& cells);
 #endif

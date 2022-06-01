@@ -232,16 +232,14 @@
 				</motility>
 
 				<intracellular type="maboss">
-					<bnd_filename>../data/boolean_network/intracellular_model.bnd</bnd_filename>
-					<cfg_filename>../data/boolean_network/intracellular_model.cfg</cfg_filename>
+					<bnd_filename>../data/boolean_network/Invasion_net_feedback_EMT.bnd</bnd_filename>
+					<cfg_filename>../data/boolean_network/Invasion_net_with_FAK.cfg</cfg_filename>
 					<time_step>10</time_step>
 					<time_stochasticity>0.5</time_stochasticity>
 					<initial_values>
-					    <initial_value node="GF">1</initial_value>
+						<initial_value node="GF">1</initial_value>
 					</initial_values>
 					<mutations>
-						<mutation node="p63">0</mutation>
-						<mutation node="MMPs">0</mutation>
 					</mutations>
 				</intracellular>
 
@@ -267,8 +265,8 @@
 		<substrate_to_monitor type="string" units="">ecm</substrate_to_monitor> 
 		<!-- src experiment parameters -->
 		<src_activation_time type="double" units="min">120</src_activation_time> <!--20160 -->
-		<src_stop_time type="double" units="min">1440</src_stop_time>
-		<config_radius_light type="double" units="" description="change the initial radius of the light illumination">15</config_radius_light> 
+		<src_stop_time type="double" units="min">2880</src_stop_time>
+		<config_radius_light type="double" units="" description="change the initial radius of the light illumination">45</config_radius_light> 
 		<!-- cell-substrates interaction paramaters --> 
 		<ecm_adhesion_min type="double" units="" description="used to set the min adhesion between cells and ECM"> 1 </ecm_adhesion_min>
 		<ecm_adhesion_max type="double" units="" description="used to set the min adhesion between cells and ECM"> 2 </ecm_adhesion_max>

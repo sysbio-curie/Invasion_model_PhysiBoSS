@@ -205,7 +205,7 @@ int main( int argc, char* argv[] )
 			// save data if it's time.
 
 			static bool light_on = false; 
-			if( PhysiCell_globals.current_time > src_activation_time - 0.01*diffusion_dt && SRC_active == false)
+			if( PhysiCell_globals.current_time > src_activation_time - 0.01*diffusion_dt && PhysiCell_globals.current_time < src_stop_time - 0.01*diffusion_dt &&  SRC_active == false)
 			{
 				//std::cout << "SRC activated!" << std::endl << std::endl; 
 
@@ -297,7 +297,10 @@ int main( int argc, char* argv[] )
 	save_PhysiCell_to_MultiCellDS_xml_pugi( filename , microenvironment , PhysiCell_globals.current_time ); 
 	
 	sprintf( filename , "%s/final.svg" , PhysiCell_settings.folder.c_str() ); 
-	SVG_plot( filename , microenvironment, 0.0 , PhysiCell_globals.current_time, cell_coloring_function );
+	SVG_plot_ecm( filename , microenvironment, 0.0 , PhysiCell_globals.current_time, cell_coloring_function, substrate );
+
+	sprintf( filename , "%s/final_net.csv" , PhysiCell_settings.folder.c_str() );
+	save_cells_net( filename , *PhysiCell::all_cells);
 
 	
 	// timer 

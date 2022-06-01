@@ -76,6 +76,10 @@ class MaBoSSIntracellular : public PhysiCell::Intracellular {
 		this->maboss.set_node_value(name, value);
 	}
 	
+	void mutate(std::map<std::string, double> mutations)  {
+		this->maboss.mutate(mutations);
+	}
+
 	double get_parameter_value(std::string name) {
 		return this->maboss.get_parameter_value(name);
 	}

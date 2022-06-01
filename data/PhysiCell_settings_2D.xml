@@ -240,8 +240,6 @@
 						<initial_value node="GF">1</initial_value>
 					</initial_values>
 					<mutations>
-						<mutation node="p63">1</mutation>
-						<mutation node="MMPs">1</mutation>
 					</mutations>
 				</intracellular>
 
@@ -272,7 +270,7 @@
 		<!-- cell-substrates interaction paramaters --> 
 		<ecm_adhesion_min type="double" units="" description="used to set the min adhesion between cells and ECM"> 1 </ecm_adhesion_min>
 		<ecm_adhesion_max type="double" units="" description="used to set the min adhesion between cells and ECM"> 2 </ecm_adhesion_max>
-		<cell_ecm_repulsion type="double" units="" description="change the value of ECM repulsion"> 15 </cell_ecm_repulsion>
+		<cell_ecm_repulsion type="double" units="" description="change the value of ECM repulsion"> 45 </cell_ecm_repulsion>
 		<!-- cell parameters -->
 		<choose_adhesion_function type="int" units="dimensionless" description="switch between default adhesion function or custom">0</choose_adhesion_function>
 		<cell_radius type="double" units="" description="initial radius of the cells"> 8.413 </cell_radius>
