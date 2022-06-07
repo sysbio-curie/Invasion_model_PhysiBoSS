@@ -1,6 +1,6 @@
 <h2 id="about"><strong>PhysiBoSS Multiscale model of the different modes of invasion</strong></h2>
-<p>The goal of the model is to simulate the different modes of cancer cell invasion: Collective, Single and Trail migration. This model integrates a boolean model of cancer invasion for each agent, which determine the phenotype of the cell according to the stimuli received from the microenvironment or other cells.
-Is it possible to change several parameters to switch from one invasion mode to another. In the cell types tab, is possible to change the initial conditions for all the cells as well as trigger
+<p>The objective of the model is to simulate the different modes of cancer cell invasion: Collective, Single and Trail migration. This model integrates a boolean model of cancer invasion for each agent, which determine the phenotype of the cell according to the stimuli that the cell receives from the microenvironment or other cells.
+It is possible to change several parameters to switch from one invasion mode to another. In the cell types tab, it is possible to change the initial conditions for all the cells as well as trigger
 mutations (knock-out or overexpression) to replicate in vitro experiments. (<a href="#model_details">see below</a>). </p>
 
 <p><b>Please note that this is a stochastic model: for some simulation runs, you may see the immune system fail to respond. Users are encouraged to try the simulation multiple times.</b></p>
@@ -9,7 +9,7 @@ mutations (knock-out or overexpression) to replicate in vitro experiments. (<a h
     Please cite this project via: 
 </p>
 <p style="text-align: center;">
-    M. Ruscone al., Multiscale model of the different modes of invasion 
+    M. Ruscone et al., Multiscale model of the different modes of invasion 
 </p>
 
 <p><strong>Legend:</strong></b>
@@ -30,7 +30,7 @@ mutations (knock-out or overexpression) to replicate in vitro experiments. (<a h
 
 <br/>
 
-<li><strong>Color by cell cycle:</strong> are colored by their cell cycle status </li>
+<li><strong>Color by cell cycle:</strong> agents are colored by their cell cycle status </li>
 <ul style="font-family: courier;">
 <li><span style="height: 25px; width: 25px; background-color: green; display: inline-block; border-radius: 50%; border: 1px solid black;"></span> Ki-67- (interphase)</li>
 <li><span style="height: 25px; width: 25px; background-color: yellow; display: inline-block; border-radius: 50%; border: 1px solid black;"></span> Ki-67+ (pre-mitotic)</li>
@@ -49,7 +49,7 @@ mutations (knock-out or overexpression) to replicate in vitro experiments. (<a h
 <h3 style="color: red; font-weight: strong">Caveats and disclaimers</h3>
 <strong>This model is under active development using rapid prototyping:</strong>
 <ul>
-<li>It has not been peer reviewed. </li>
+<li>It has not been peer reviewed yet. </li>
 <li>It is intended to drive basic scientific research and public education at this stage.</li>
 <li><strong>It cannot be used for public policy decisions. </strong></li>
 <li><strong>It cannot be used for individual medical decisions.</strong></li>
@@ -63,8 +63,10 @@ mutations (knock-out or overexpression) to replicate in vitro experiments. (<a h
 <li><b>User Params</b> tab:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; user parameters that are model-specific</li>
 <li><b>Cell Types</b> tab:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; parameters for cell types that are model-specific</li>
 <li><b>Out: Plots</b> tab:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; output display of cells and substrates</li>
+<li><b>Out: PhysiBoSS</b> tab:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; output display all the phenotypes for all the cells</li>
 <li><b>Animate</b> tab:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; generate an animation of cells</li>
 </ul>
+
 Clicking the 'Run' button will use the specified parameters and start a simulation. When clicked, it creates an "Output" widget
 that can be clicked/expanded to reveal the progress of the simulation. When the simulation generates output files,
 they can be visualized in the "Out: Plots" tab. The "# cell frames" will be dynamically updated 
@@ -80,7 +82,29 @@ Note that as the simulation runs, the &quot;# cell frames&quot; field will incre
 
 <p>If there are multiple substrates defined in the Microenvironment, you can select a different one from the drop-down widget in the Plots tab. You can also fix the colormap range of values.</p>
 
+<p>Please note that you can load a different setting file in the top meft corner &quot;Load Config&quot;. The default config file runs a 3D simulation, which is computationally heavier. The &quot;2D &quot;config file runs a 2-dimensional simulation, easier and faster to run.</p>
+
 <p>Note that you can download full simulation data for further exploration in your tools of choice. And you can also generate an animation of the cells to play in the browser and, optionally, download as a video.</p>
+
+<h2><a id="instructions" name="instructions">Advanced instructions</a></h2>
+
+<h3><strong>Reproducing in-vitro experiment: p63/MMPs [4]</strong></h3> 
+
+<p>From any configuration (both DEFAULT and 2D), click on &quot;Cell Types &quot; tab, in the mutations section, select &quot;p63&quot;. Once enabled, to reproduce an overexpression of p63, insert as value &quot;1&quot;. To reproduce a knock-out, insert &quot;0&quot;. Press &quot;Run&quot; to start the simulation.</p>
+<p>In p63 overexpression condition, all the cells will have the node &quot;MMPs&quot; active. In this condition all the cells will be able to degrade the ECM (that the user can visualize selecting it in the Plots tab.).</p>
+<p>In p63 knock-out condition, all the cells will have the node &quot;MMPs&quot; inactive. In this state, no cell will be able to degrade the ECM, confining the tumor and blocking invasion.
+The cells will still be able to reproduce and divide.</p>
+
+<h3><strong>Reproducing in-vitro experiment: OptoSRC [5]</strong></h3> 
+
+<p>From the 2D configuration, click on &quot;User Param &quot; tab, and change the values &quot;src_activation_time&quot; to 120 and &quot;src_stop_time&quot; to 2880. Increase the value of &quot;config_radius_light&quot; to increase the amount of cells in the monolayer exposed to the lights (and so affected by the mutation). Click &quot;Run&quot; to start the simulation.</p>
+<p>In the &quot;Out: Plots&quot; select &quot;Color by PhysiBoSS value&quot; and select the nodes &quot; SRC&quot; or &quot; EMT&quot; to follow the mutated cells in the middle of the monolayer.</p>
+
+<h3><strong>Reproducing in-vitro experiment: Different ECM densities [6]</strong></h3> 
+
+<p>From any configuration (both DEFAULT and 2D), click on &quot;User Param &quot; tab, and change the values &quot;density_ECM_max&quot; to 0.5 and &quot;density_ECM_min&quot; to 0.2. This settings will reproduce a low density heterogeneus ECM, promoting single cell invasion.
+Setting both the previous value to 0.7, will simulate a confining high-density ECM, promoting collecting migration.
+Click &quot;Run&quot; to start the simulation.</p>
 
 <h3><strong>About the software: </strong></h3> 
 <p>
@@ -101,4 +125,6 @@ This model and cloud-hosted demo are part of the education and outreach
 <a href="https://pubmed.ncbi.nlm.nih.gov/25893299/">Lodillinsky C, Infante E, Guichard A, et al. p63/MT1-MMP axis is required for in situ to invasive transition in basal-like breast cancer. Oncogene. 2016;35(3):344-357. doi:10.1038/onc.2015.87 </a> </li>
 <li>
 <a href="https://www.nature.com/articles/s42005-019-0198-5">Moitrier, S., Pricoupenko, N., Kerjouan, A. et al. Local light-activation of the Src oncoprotein in an epithelial monolayer promotes collective extrusion. Commun Phys 2, 98 (2019). </a> </li>
+<li>
+<a href="https://www.nature.com/articles/s41556-020-0552-6">Ilina O, Gritsenko PG, Syga S, et al. Cell-cell adhesion and 3D matrix confinement determine jamming transitions in breast cancer invasion. Nat Cell Biol. 2020;22(9):1103-1115. doi:10.1038/s41556-020-0552-6 </a> </li>
 </ol>
