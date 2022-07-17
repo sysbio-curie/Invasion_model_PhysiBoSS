@@ -142,7 +142,7 @@ class SubstrateTab(object):
         self.mcds_field.observe(self.mcds_field_changed_cb)
 
         self.field_cmap = Dropdown(
-            options=['viridis', 'jet', 'YlOrRd'],
+            options=['viridis', 'jet', 'YlOrRd', 'GnBu'],
             value='YlOrRd',
             #     description='Field',
            layout=Layout(width=constWidth)
@@ -364,7 +364,7 @@ class SubstrateTab(object):
 
         self.field_custom_data.observe(self.field_custom_data_cb)
         
-        self.custom_data_cmaps = ['viridis', 'jet', 'YlOrRd']
+        self.custom_data_cmaps = ['viridis', 'jet', 'YlOrRd', 'gray']
         self.field_custom_data_cmap = Dropdown(
             options=self.custom_data_cmaps,
             value=self.custom_data_cmaps[0],

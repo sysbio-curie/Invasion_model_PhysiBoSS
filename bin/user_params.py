@@ -42,6 +42,13 @@ class UserTab(object):
           value='ecm',
           style=style, layout=widget_layout)
 
+        param_name39 = Button(description='node_to_mutate', disabled=True, layout=name_button_layout)
+        param_name39.style.button_color = 'lightblue'
+
+        self.node_to_mutate = Text(
+            value='SRC',
+            style=style, layout=widget_layout)
+
         param_name3 = Button(description='src_activation_time', disabled=True, layout=name_button_layout)
         param_name3.style.button_color = 'lightgreen'
 
@@ -404,6 +411,8 @@ class UserTab(object):
         units_button37.style.button_color = 'lightgreen'
         units_button38 = Button(description='', disabled=True, layout=units_button_layout) 
         units_button38.style.button_color = 'tan'
+        units_button39 = Button(description='', disabled=True, layout=units_button_layout)
+        units_button39.style.button_color = 'lightblue'
 
         desc_button1 = Button(description='change seed of the simulation' , tooltip='change seed of the simulation', disabled=True, layout=desc_button_layout) 
         desc_button1.style.button_color = 'lightgreen'
@@ -481,6 +490,9 @@ class UserTab(object):
         desc_button37.style.button_color = 'lightgreen'
         desc_button38 = Button(description='change the basic color function: 0 for ECM based color, 1 for phase based color, 2 for node based color' , tooltip='change the basic color function: 0 for ECM based color, 1 for phase based color, 2 for node based color', disabled=True, layout=desc_button_layout) 
         desc_button38.style.button_color = 'tan'
+        desc_button39 = Button(description='select another node to mutate for the experiments in a selected area ' , tooltip='select another node to mutate for the experiments in a selected area', disabled=True, layout=desc_button_layout)
+        desc_button39.style.button_color = 'lightblue'
+
 
         row1 = [param_name1, self.random_seed, units_button1, desc_button1] 
         row2 = [param_name2, self.substrate_to_monitor, units_button2, desc_button2] 
@@ -519,7 +531,8 @@ class UserTab(object):
         row35 = [param_name35, self.ECM_TGFbeta_ratio, units_button35, desc_button35] 
         row36 = [param_name36, self.parameter_to_visualize, units_button36, desc_button36] 
         row37 = [param_name37, self.node_to_visualize, units_button37, desc_button37] 
-        row38 = [param_name38, self.color_function, units_button38, desc_button38] 
+        row38 = [param_name38, self.color_function, units_button38, desc_button38]
+        row39 = [param_name39, self.node_to_mutate, units_button39, desc_button39]
 
         box_layout = Layout(display='flex', flex_flow='row', align_items='stretch', width='100%')
         box1 = Box(children=row1, layout=box_layout)
@@ -560,10 +573,12 @@ class UserTab(object):
         box36 = Box(children=row36, layout=box_layout)
         box37 = Box(children=row37, layout=box_layout)
         box38 = Box(children=row38, layout=box_layout)
+        box39 = Box(children=row39, layout=box_layout)
 
         self.tab = VBox([
           box1,
           box2,
+          box39,
           box3,
           box4,
           box5,
@@ -613,6 +628,7 @@ class UserTab(object):
         uep = xml_root.find('.//user_parameters')  # find unique entry point
         self.random_seed.value = int(uep.find('.//random_seed').text)
         self.substrate_to_monitor.value = (uep.find('.//substrate_to_monitor').text)
+        self.node_to_mutate.value = (uep.find('.//node_to_mutate').text)
         self.src_activation_time.value = float(uep.find('.//src_activation_time').text)
         self.src_stop_time.value = float(uep.find('.//src_stop_time').text)
         self.config_radius_light.value = float(uep.find('.//config_radius_light').text)
@@ -662,6 +678,7 @@ class UserTab(object):
         uep = xml_root.find('.//user_parameters')  # find unique entry point
         uep.find('.//random_seed').text = str(self.random_seed.value)
         uep.find('.//substrate_to_monitor').text = str(self.substrate_to_monitor.value)
+        uep.find('.//node_to_mutate').text = str(self.node_to_mutate.value)
         uep.find('.//src_activation_time').text = str(self.src_activation_time.value)
         uep.find('.//src_stop_time').text = str(self.src_stop_time.value)
         uep.find('.//config_radius_light').text = str(self.config_radius_light.value)

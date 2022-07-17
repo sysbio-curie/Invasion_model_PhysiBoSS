@@ -423,7 +423,7 @@ void custom_cell_attach(Cell* pCell){
 
 		//should I also check the distance between the cells?
 
-		if (junction + otherJunction > PhysiCell::parameters.doubles("cell_junctions_attach_threshold"))
+		if (junction * otherJunction > PhysiCell::parameters.doubles("cell_junctions_attach_threshold"))
 			attach_cells( neigh[i] , pCell ); 
 
 	}
@@ -438,7 +438,7 @@ void custom_detach_cells(Cell* pCell){
 
 		double otherJunction = cell_attached->custom_data["padhesion"];
 
-		if (junction + otherJunction < PhysiCell::parameters.doubles("cell_junctions_detach_threshold"))
+		if (junction * otherJunction < PhysiCell::parameters.doubles("cell_junctions_detach_threshold"))
 			detach_cells( cell_attached , pCell );
 
 	};
@@ -980,6 +980,7 @@ void start_SRC_mutation(bool light_on){
 // Here we design a spherical shell 
  std::vector<double> center(3, 0);
  double light_radius = parameters.doubles("config_radius_light");
+ std::string node_name = parameters.strings("node_to_mutate");
 
  int total_cell_count = all_cells->size(); 
 
@@ -991,14 +992,14 @@ void start_SRC_mutation(bool light_on){
 
 	 double norm_pos = norm(pC->position);
 	 if(norm_pos < light_radius && light_on){
-		 mutations["SRC"] = double(light_on);
+		 mutations[node_name] = double(light_on);
 		 pC->phenotype.intracellular->mutate(mutations);
-		 std::cout << "MUTATIONS ON!!!! " << pC->phenotype.intracellular->get_boolean_variable_value("SRC") << std::endl;
+		 //std::cout << "MUTATIONS ON!!!! " << pC->phenotype.intracellular->get_boolean_variable_value(node_name) << std::endl;
 	 }
 	 else if(norm_pos < light_radius && !light_on) {
-		mutations["SRC"] = double(light_on);
+		mutations[node_name] = double(light_on);
 		pC->phenotype.intracellular->mutate(mutations);
-		std::cout << "MUTATIONS OFF!!!! " << pC->phenotype.intracellular->get_boolean_variable_value("SRC") << std::endl;
+		//std::cout << "MUTATIONS OFF!!!! " << pC->phenotype.intracellular->get_boolean_variable_value(node_name) << std::endl;
 	 }
 
  }
@@ -1109,7 +1110,7 @@ void save_cells_net(std::string filename, std::vector<PhysiCell::Cell*>& cells)
 					
 	std::ofstream net_file( filename );
 	
-	net_file << "ID, neighID0.5, neighID1, neighID5, neighID" << std::endl;
+	net_file << "ID, neighID, neighID45, neighID90, neighID180" << std::endl;
 
 
 
@@ -1117,46 +1118,58 @@ void save_cells_net(std::string filename, std::vector<PhysiCell::Cell*>& cells)
 
 		std::vector<Cell*> neighbors = PhysiCell::find_nearby_interacting_cells(cell);
 
-		double theta = atan(cell->phenotype.motility.motility_vector[1] / cell->phenotype.motility.motility_vector[0]);
-		theta = (theta / 180.0) * M_PI;
+		double rapp = cell->phenotype.motility.motility_vector[1] / cell->phenotype.motility.motility_vector[0];
+
+		double theta = atan(rapp);
+		theta = (theta * 180.0) / M_PI;
+		if(theta < 0)
+			theta = theta + 360.0;
 		net_file << cell->ID << ",";
 
-		double diff = (90.0 / 180.0) * M_PI; // 90 is the angle we want to explore
+		for( int n=0; n < neighbors.size() ; n++ ){
+			net_file << neighbors[n]->ID << "/";	
+		}
 
+		net_file << ",";
+
+		double diff = 45.0; // 45 is the angle we want to explore
 
 		for( int n=0; n < neighbors.size() ; n++ ){
-			double theta_neigh = neighbors[n]->phenotype.motility.motility_vector[1] / neighbors[n]->phenotype.motility.motility_vector[0];
-			if(theta_neigh < (theta + diff) && theta_neigh > (theta - diff))
+			double theta_neigh = atan(neighbors[n]->phenotype.motility.motility_vector[1] / neighbors[n]->phenotype.motility.motility_vector[0]);
+			theta_neigh = (theta_neigh * 180.0) / M_PI;
+			if(theta_neigh < 0)
+				theta_neigh = theta_neigh + 360.0;
+			if(abs(theta - theta_neigh) < diff)
 				net_file << neighbors[n]->ID << "/";
 			
 		}
 		 
 		net_file << ",";
 
-		diff = (150.0 / 180.0) * M_PI; // 150 is the angle we want to explore
+		diff = 90.0; // 150 is the angle we want to explore
 
 		for( int n=0; n < neighbors.size() ; n++ ){
-			double theta_neigh = neighbors[n]->phenotype.motility.motility_vector[1] / neighbors[n]->phenotype.motility.motility_vector[0];
-			if(theta_neigh < (theta + diff) && theta_neigh > (theta - diff))
+			double theta_neigh = atan(neighbors[n]->phenotype.motility.motility_vector[1] / neighbors[n]->phenotype.motility.motility_vector[0]);
+			theta_neigh = (theta_neigh * 180.0) / M_PI;
+			if(theta_neigh < 0)
+				theta_neigh = theta_neigh + 360.0;
+			if(abs(theta - theta_neigh) < diff)
 				net_file << neighbors[n]->ID << "/";
 			
 		}
 
 		net_file << ",";
 
-		diff = (180.0 / 180.0) * M_PI; // 180 is the angle we want to explore
+		diff = 180.0; // 180 is the angle we want to explore
 
 		for( int n=0; n < neighbors.size() ; n++ ){
-			double theta_neigh = neighbors[n]->phenotype.motility.motility_vector[1] / neighbors[n]->phenotype.motility.motility_vector[0];
-			if(theta_neigh < (theta + diff) && theta_neigh > (theta - diff))
+			double theta_neigh = atan(neighbors[n]->phenotype.motility.motility_vector[1] / neighbors[n]->phenotype.motility.motility_vector[0]);
+			theta_neigh = (theta_neigh * 180.0) / M_PI;
+			if(theta_neigh < 0)
+				theta_neigh = theta_neigh + 360.0;
+			if(abs(theta - theta_neigh) < diff)
 				net_file << neighbors[n]->ID << "/";
 			
-		}
-
-		net_file << ",";
-
-		for( int n=0; n < neighbors.size() ; n++ ){
-			net_file << neighbors[n]->ID << "/";	
 		}
 
 		net_file << std::endl;

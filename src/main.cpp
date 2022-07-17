@@ -194,8 +194,6 @@ int main( int argc, char* argv[] )
 	
 	//switch for the SRC
 
-	bool SRC_active = false;
-
 	// main loop 
 	
 	try 
@@ -205,7 +203,7 @@ int main( int argc, char* argv[] )
 			// save data if it's time.
 
 			static bool light_on = false; 
-			if( PhysiCell_globals.current_time > src_activation_time - 0.01*diffusion_dt && PhysiCell_globals.current_time < src_stop_time - 0.01*diffusion_dt &&  SRC_active == false)
+			if( PhysiCell_globals.current_time > src_activation_time && PhysiCell_globals.current_time < src_stop_time - 0.01*diffusion_dt )
 			{
 				//std::cout << "SRC activated!" << std::endl << std::endl; 
 
@@ -213,17 +211,15 @@ int main( int argc, char* argv[] )
 				
 				start_SRC_mutation(light_on);
 
-				SRC_active = true;
 			} 
-			else if (PhysiCell_globals.current_time > src_stop_time - 0.01*diffusion_dt && SRC_active == true)
+			else if (PhysiCell_globals.current_time > src_stop_time )
 			{
 				//std::cout << "SRC stopped!" << std::endl << std::endl; 
 
 				light_on = false;
 				
 				start_SRC_mutation(light_on);
-
-				SRC_active = false;
+				
 			}
 
 			if( fabs( PhysiCell_globals.current_time - PhysiCell_globals.next_full_save_time ) < 0.01 * diffusion_dt )
@@ -243,6 +239,10 @@ int main( int argc, char* argv[] )
 					sprintf( filename , "%s/states_%08u.csv", PhysiCell_settings.folder.c_str(), PhysiCell_globals.full_output_index);
 					
 					MaBoSSIntracellular::save( filename, *PhysiCell::all_cells );
+
+					sprintf( filename , "%s/final_net%08u.csv" , PhysiCell_settings.folder.c_str(), PhysiCell_globals.full_output_index);
+					save_cells_net( filename , *PhysiCell::all_cells);
+					
 
 				}
 				
