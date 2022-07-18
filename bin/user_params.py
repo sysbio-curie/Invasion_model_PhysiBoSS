@@ -49,18 +49,18 @@ class UserTab(object):
             value='SRC',
             style=style, layout=widget_layout)
 
-        param_name3 = Button(description='src_activation_time', disabled=True, layout=name_button_layout)
+        param_name3 = Button(description='activation_time', disabled=True, layout=name_button_layout)
         param_name3.style.button_color = 'lightgreen'
 
-        self.src_activation_time = FloatText(
+        self.activation_time = FloatText(
           value=120,
           step=10,
           style=style, layout=widget_layout)
 
-        param_name4 = Button(description='src_stop_time', disabled=True, layout=name_button_layout)
+        param_name4 = Button(description='stop_time', disabled=True, layout=name_button_layout)
         param_name4.style.button_color = 'tan'
 
-        self.src_stop_time = FloatText(
+        self.stop_time = FloatText(
           value=1440,
           step=100,
           style=style, layout=widget_layout)
@@ -496,8 +496,8 @@ class UserTab(object):
 
         row1 = [param_name1, self.random_seed, units_button1, desc_button1] 
         row2 = [param_name2, self.substrate_to_monitor, units_button2, desc_button2] 
-        row3 = [param_name3, self.src_activation_time, units_button3, desc_button3] 
-        row4 = [param_name4, self.src_stop_time, units_button4, desc_button4] 
+        row3 = [param_name3, self.activation_time, units_button3, desc_button3]
+        row4 = [param_name4, self.stop_time, units_button4, desc_button4]
         row5 = [param_name5, self.config_radius_light, units_button5, desc_button5] 
         row6 = [param_name6, self.ecm_adhesion_min, units_button6, desc_button6] 
         row7 = [param_name7, self.ecm_adhesion_max, units_button7, desc_button7] 
@@ -629,8 +629,8 @@ class UserTab(object):
         self.random_seed.value = int(uep.find('.//random_seed').text)
         self.substrate_to_monitor.value = (uep.find('.//substrate_to_monitor').text)
         self.node_to_mutate.value = (uep.find('.//node_to_mutate').text)
-        self.src_activation_time.value = float(uep.find('.//src_activation_time').text)
-        self.src_stop_time.value = float(uep.find('.//src_stop_time').text)
+        self.activation_time.value = float(uep.find('.//src_activation_time').text)
+        self.stop_time.value = float(uep.find('.//src_stop_time').text)
         self.config_radius_light.value = float(uep.find('.//config_radius_light').text)
         self.ecm_adhesion_min.value = float(uep.find('.//ecm_adhesion_min').text)
         self.ecm_adhesion_max.value = float(uep.find('.//ecm_adhesion_max').text)
@@ -679,8 +679,8 @@ class UserTab(object):
         uep.find('.//random_seed').text = str(self.random_seed.value)
         uep.find('.//substrate_to_monitor').text = str(self.substrate_to_monitor.value)
         uep.find('.//node_to_mutate').text = str(self.node_to_mutate.value)
-        uep.find('.//src_activation_time').text = str(self.src_activation_time.value)
-        uep.find('.//src_stop_time').text = str(self.src_stop_time.value)
+        uep.find('.//src_activation_time').text = str(self.activation_time.value)
+        uep.find('.//src_stop_time').text = str(self.stop_time.value)
         uep.find('.//config_radius_light').text = str(self.config_radius_light.value)
         uep.find('.//ecm_adhesion_min').text = str(self.ecm_adhesion_min.value)
         uep.find('.//ecm_adhesion_max').text = str(self.ecm_adhesion_max.value)

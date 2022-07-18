@@ -3,7 +3,7 @@
 It is possible to change several parameters to switch from one invasion mode to another. In the cell types tab, it is possible to change the initial conditions for all the cells as well as trigger
 mutations (knock-out or overexpression) to replicate in vitro experiments. (<a href="#model_details">see below</a>). </p>
 
-<p><b>Please note that this is a stochastic model: for some simulation runs, you may see the immune system fail to respond. Users are encouraged to try the simulation multiple times.</b></p>
+<p><b>Please note that this is a stochastic model. Users are encouraged to try the simulation multiple times.</b></p>
 
 <p>
     Please cite this project via: 
@@ -94,10 +94,11 @@ Note that as the simulation runs, the &quot;# cell frames&quot; field will incre
 <p>In p63 overexpression condition, all the cells will have the node &quot;MMPs&quot; active. In this condition all the cells will be able to degrade the ECM (that the user can visualize selecting it in the Plots tab.).</p>
 <p>In p63 knock-out condition, all the cells will have the node &quot;MMPs&quot; inactive. In this state, no cell will be able to degrade the ECM, confining the tumor and blocking invasion.
 The cells will still be able to reproduce and divide.</p>
+<p>The user can also reproduce the extended results. To do so, while activating the knock-in or knock-out mutation in the &quot;Cell Types &quot; tab, click on the &quot;User Param &quot; tab, select &quot;node_to_mutate&quot; and insert the gene you want to mutate (for example ERK or CTNNB1). Select an activation and a stop time (&quot;activation_time&quot;, &quot;stop_time&quot;) to decide when to introduce the knock in or the knock-out (exceed the simulation time if you don't want to use this feature). Select a radius (&quot;config_radius_light&quot;) to decide which cells will be mutated. Please note that is necessary to insert the correct name of the gene, otherwise the simulation will fail. Refers to the supplementary material to have the complete list of the genes in the network and their interactions. </p>
 
 <h3><strong>Reproducing in-vitro experiment: OptoSRC [5]</strong></h3> 
 
-<p>From the 2D configuration, click on &quot;User Param &quot; tab, and change the values &quot;src_activation_time&quot; to 120 and &quot;src_stop_time&quot; to 2880. Increase the value of &quot;config_radius_light&quot; to increase the amount of cells in the monolayer exposed to the lights (and so affected by the mutation). Click &quot;Run&quot; to start the simulation.</p>
+<p>From the 2D configuration, click on &quot;User Param &quot; tab, and change the name of the node to mutate (&quot;node_to_mutate&quot;) into &quot;SRC&quot;. Change the values &quot;activation_time&quot; to 120 and &quot;stop_time&quot; to 2880. Change the value of &quot;config_radius_light&quot; to increase or decrease the amount of cells in the monolayer exposed to the lights (and so affected by the mutation). Click &quot;Run&quot; to start the simulation.</p>
 <p>In the &quot;Out: Plots&quot; select &quot;Color by PhysiBoSS value&quot; and select the nodes &quot; SRC&quot; or &quot; EMT&quot; to follow the mutated cells in the middle of the monolayer.</p>
 
 <h3><strong>Reproducing in-vitro experiment: Different ECM densities [6]</strong></h3> 

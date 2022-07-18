@@ -636,6 +636,7 @@ self.cell_def_vbox0,         ])
                 self.bool17.value = True
                 self.float31.value = float(value.text)
 
+
         # to add custom data  self.float32.value = float(uep.find('.//cell_definition[1]//phenotype//customdata//pintegrin').text)
 
 
