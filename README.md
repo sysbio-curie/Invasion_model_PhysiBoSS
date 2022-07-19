@@ -17,7 +17,7 @@ And then open your browser to this url : http://localhost:8888/notebooks/Invasio
 ```
 git clone https://github.com/marcorusc/Invasion_GUI
 cd Invasion_GUI
-docker build -t Invasion_GUI .
-docker run -p 8888:8888 -d Invasion_GUI
+docker build -t invasion_gui .
+docker run -p 8888:8888 -d invasion_gui
 ```
 And then open your browser to this url : http://localhost:8888/notebooks/Invasion_GUI.ipynb
