@@ -1,5 +1,33 @@
 This simulation is an example of how boolean models can be integrated into Paul Macklin's team PhysiCell simulation using PhysiBoSS, in order to integrate more mechanistic details into cell-specific intracellular models.
 
+### Run locally :
+
+Download the git folder using git clone and access the src folder :
+
+```
+git clone https://github.com/marcorusc/Invasion_GUI
+cd Invasion_GUI/src
+```
+compile the project and move the executable into the bin folder :
+
+```
+make
+cp myproj ../bin
+```
+
+exit src and run the notebook :
+
+```
+cd ..
+jupyter notebook
+```
+
+it could be necessary to export the CACHEDIR, if so :
+
+```
+export CACHEDIR=~/Invasion_GUI/tmpdir
+```
+
 ### Run in nanoHUB : work in progress
 
 ### Run in Binder : [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcorusc/Invasion_GUI/HEAD)
