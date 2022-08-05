@@ -1,0 +1,24 @@
+name: MaBoSS_env
+channels:
+  - colomoto
+  - conda-forge
+  - defaults
+dependencies:
+  - colomoto_jupyter
+  - ginsim
+  - ginsim-python=0.4.3
+  - jupyter
+  - jupyter_client
+  - jupyter_console
+  - jupyter_core
+  - jupyterlab_pygments
+  - jupyterlab_widgets
+  - pymaboss=0.7.9
+  - matplotlib
+  - matplotlib-base
+  - matplotlib-inline
+  - notebook
+  - python=3.9.7
+  - pip:
+    - maboss-test==1.0.0a4
+prefix: /home/marco/anaconda3/envs/MaBoSS_env
