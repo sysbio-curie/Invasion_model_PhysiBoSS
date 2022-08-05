@@ -232,8 +232,8 @@
 				</motility>
 
 				<intracellular type="maboss">
-					<bnd_filename>./config/boolean_network/intracellular_model.bnd</bnd_filename>
-					<cfg_filename>./config/boolean_network/intracellular_model.cfg</cfg_filename>
+					<bnd_filename>../data/boolean_network/intracellular_model.bnd</bnd_filename>
+					<cfg_filename>../data/boolean_network/intracellular_model.cfg</cfg_filename>
 					<time_step>10</time_step>
 					<time_stochasticity>1</time_stochasticity>
 					<initial_values>
