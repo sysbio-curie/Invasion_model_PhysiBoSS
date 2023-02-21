@@ -2,12 +2,12 @@
 version: "3.3"
 services:
 
-  Invasion_GUI:
+  invasion_gui:
     build:
       context: ./
       dockerfile: Dockerfile
       
-    image: Invasion_GUI
-    container_name: Invasion_GUI
+    image: invasion_gui
+    container_name: invasion_gui
     ports:
       - "8888:8888"
