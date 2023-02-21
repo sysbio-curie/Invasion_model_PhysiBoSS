@@ -13,7 +13,7 @@ nanoHub is similar to Binder, but with better machines, although it requires a f
 ## Run locally with Docker and Docker-compose
 ```
 git clone https://github.com/sysbio-curie/Invasion_model_PhysiBoSS
-cd Invasion_GUI
+cd Invasion_model_PhysiBoSS
 docker-compose up -d
 ```
 
@@ -22,7 +22,7 @@ And then open your browser to this url : http://localhost:8888/notebooks/Invasio
 ## Run locally with Docker
 ```
 git clone https://github.com/sysbio-curie/Invasion_model_PhysiBoSS
-cd Invasion_GUI
+cd Invasion_model_PhysiBoSS
 docker build -t invasion_gui .
 docker run -p 8888:8888 -d invasion_gui
 ```
@@ -34,7 +34,7 @@ Download the git folder using git clone and access the src folder :
 
 ```
 git clone https://github.com/sysbio-curie/Invasion_model_PhysiBoSS
-cd Invasion_GUI/src
+cd Invasion_model_PhysiBoSS/src
 ```
 compile the project and move the executable into the bin folder :
 
@@ -73,5 +73,5 @@ python3 -m pip install -r requirements.txt
 In some cases, it could be necessary to export the CACHEDIR before launching the notebook, if so :
 
 ```
-export CACHEDIR=~/Invasion_GUI/tmpdir
+export CACHEDIR=bin/tmpdir
 ```
