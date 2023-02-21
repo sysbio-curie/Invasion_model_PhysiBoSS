@@ -168,7 +168,7 @@ PhysiCell_settings.o: ./modules/PhysiCell_settings.cpp
 # user-defined PhysiCell modules
 
 MaBoSS: 
-	cd ./addons/PhysiBoSS/MaBoSS-env-2.0/engine/src;make install_alib;make clean;cd ../../../../..
+	cd ./addons/PhysiBoSS/MaBoSS-env-2.0/engine/src;make install_alib CXX=$(PHYSICELL_CPP);make clean;cd ../../../../..
 
 
 maboss_network.o: ./addons/PhysiBoSS/src/maboss_network.cpp
