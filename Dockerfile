@@ -10,7 +10,7 @@ RUN adduser --disabled-password \
     user
 
 RUN apt-get -qq update && apt-get install -yq flex bison python3-pip
-RUN pip3 install jupyter notebook scipy matplotlib hublib joblib==1.1.1
+RUN pip3 install jupyter notebook scipy matplotlib hublib joblib==1.1.1 ipywidgets=7.7.3
 
 WORKDIR /home/user
 COPY . /home/user
