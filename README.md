@@ -2,7 +2,7 @@ We present here a model of tumor cell invasion simulated within PhysiBoSS, a mul
 
 We present multiple options to run this simulation, ordered by increasing complexity :
 
-## Run in Binder : [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/sysbio-curie/Invasion_model_PhysiBoSS/master?labpath=Invasion_GUI.ipynb)
+## Run in Binder : [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/sysbio-curie/Invasion_model_PhysiBoSS/master?filepath=Invasion_GUI.ipynb)
 
 This is the simplest, one click version to run this notebook. Note that binder is a free service, and performances of the machines might be limited. 
 
