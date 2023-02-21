@@ -28,6 +28,17 @@ it could be necessary to export the CACHEDIR, if so :
 export CACHEDIR=~/Invasion_GUI/tmpdir
 ```
 
+Note that by default, on MacOS, the compiler is Clang and it is not providing support for OpenMP. To solve this, please install gcc, and use it to compile the project with these extra parameters : 
+
+```
+make PHYSICELL_CPP=<gcc C++ compiler>
+```
+
+For example : 
+``` 
+make PHYSICELL_CPP=g++-12
+```
+
 ### Run in nanoHUB : work in progress
 
 ### Run in Binder : [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcorusc/Invasion_GUI/HEAD)
