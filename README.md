@@ -2,7 +2,7 @@ We present here a model of tumor cell invasion simulated within PhysiBoSS, a mul
 
 We present multiple options to run this simulation, ordered by increasing complexity :
 
-## Run in Binder : [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcorusc/Invasion_GUI/master?labpath=Invasion_GUI.ipynb)
+## Run in Binder : [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/sysbio-curie/Invasion_model_PhysiBoSS/master?labpath=Invasion_GUI.ipynb)
 
 This is the simplest, one click version to run this notebook. Note that binder is a free service, and performances of the machines might be limited. 
 
@@ -12,7 +12,7 @@ nanoHub is similar to Binder, but with better machines, although it requires a f
 
 ## Run locally with Docker and Docker-compose
 ```
-git clone https://github.com/marcorusc/Invasion_GUI
+git clone https://github.com/sysbio-curie/Invasion_model_PhysiBoSS
 cd Invasion_GUI
 docker-compose up -d
 ```
@@ -21,7 +21,7 @@ And then open your browser to this url : http://localhost:8888/notebooks/Invasio
 
 ## Run locally with Docker
 ```
-git clone https://github.com/marcorusc/Invasion_GUI
+git clone https://github.com/sysbio-curie/Invasion_model_PhysiBoSS
 cd Invasion_GUI
 docker build -t invasion_gui .
 docker run -p 8888:8888 -d invasion_gui
@@ -33,7 +33,7 @@ And then open your browser to this url : http://localhost:8888/notebooks/Invasio
 Download the git folder using git clone and access the src folder :
 
 ```
-git clone https://github.com/marcorusc/Invasion_GUI
+git clone https://github.com/sysbio-curie/Invasion_model_PhysiBoSS
 cd Invasion_GUI/src
 ```
 compile the project and move the executable into the bin folder :
