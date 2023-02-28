@@ -380,38 +380,56 @@ class CellTypesTab(object):
         time_step = [self.bool17, name_btn, self.float31, units_btn, ]
         box33 = Box(children=time_step, layout=box_layout)
 
+        self.bool18 = Checkbox(description='enabled', value=False, layout=name_button_layout)
+        name_btn = Button(description='miR200', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'lightgreen'
+        self.float32 = FloatText(value='1', step='0.1', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'lightgreen'
+        time_step = [self.bool18, name_btn, self.float32, units_btn, ]
+        box34 = Box(children=time_step, layout=box_layout)
+
+        self.bool19 = Checkbox(description='enabled', value=False, layout=name_button_layout)
+        name_btn = Button(description='miR203', disabled=True, layout=name_button_layout)
+        name_btn.style.button_color = 'lightgreen'
+        self.float33 = FloatText(value='1', step='0.1', style=style, layout=widget_layout)
+        units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        units_btn.style.button_color = 'lightgreen'
+        time_step = [self.bool19, name_btn, self.float33, units_btn, ]
+        box35 = Box(children=time_step, layout=box_layout)
+
 #      ================== <custom_data>, if present ==================
 
         div_row6 = Button(description='Custom Data',disabled=True, layout=divider_button_layout)
         div_row6.style.button_color = 'cyan'
-        name_btn = Button(description='pintegrin', disabled=True, layout=name_button_layout)
-        name_btn.style.button_color = 'tan'
-        self.float32 = FloatText(value='0', step='0.01', style=style, layout=widget_layout)
-        units_btn = Button(description='', disabled=True, layout=name_button_layout)
-        units_btn.style.button_color = 'tan'
-        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
-        description_btn.style.button_color = 'tan'
-        row = [name_btn, self.float32, units_btn, description_btn]
+        # name_btn = Button(description='pintegrin', disabled=True, layout=name_button_layout)
+        # name_btn.style.button_color = 'tan'
+        # self.float32 = FloatText(value='0', step='0.01', style=style, layout=widget_layout)
+        # units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        # units_btn.style.button_color = 'tan'
+        # description_btn = Button(description='', disabled=True, layout=desc_button_layout)
+        # description_btn.style.button_color = 'tan'
+        # row = [name_btn, self.float32, units_btn, description_btn]
 
-        box34 = Box(children=row, layout=box_layout)
-        name_btn = Button(description='integrin', disabled=True, layout=name_button_layout)
-        name_btn.style.button_color = 'lightgreen'
-        self.float33 = FloatText(value='0.1', step='0.01', style=style, layout=widget_layout)
-        units_btn = Button(description='', disabled=True, layout=name_button_layout)
-        units_btn.style.button_color = 'lightgreen'
-        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
-        description_btn.style.button_color = 'lightgreen'
-        row = [name_btn, self.float33, units_btn, description_btn]
-
-        box35 = Box(children=row, layout=box_layout)
-        name_btn = Button(description='pmotility', disabled=True, layout=name_button_layout)
-        name_btn.style.button_color = 'tan'
-        self.float34 = FloatText(value='0.1', step='0.01', style=style, layout=widget_layout)
-        units_btn = Button(description='', disabled=True, layout=name_button_layout)
-        units_btn.style.button_color = 'tan'
-        description_btn = Button(description='', disabled=True, layout=desc_button_layout)
-        description_btn.style.button_color = 'tan'
-        row = [name_btn, self.float34, units_btn, description_btn]
+        # box34 = Box(children=row, layout=box_layout)
+        # name_btn = Button(description='integrin', disabled=True, layout=name_button_layout)
+        # name_btn.style.button_color = 'lightgreen'
+        # self.float33 = FloatText(value='0.1', step='0.01', style=style, layout=widget_layout)
+        # units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        # units_btn.style.button_color = 'lightgreen'
+        # description_btn = Button(description='', disabled=True, layout=desc_button_layout)
+        # description_btn.style.button_color = 'lightgreen'
+        # row = [name_btn, self.float33, units_btn, description_btn]
+        #
+        # box35 = Box(children=row, layout=box_layout)
+        # name_btn = Button(description='pmotility', disabled=True, layout=name_button_layout)
+        # name_btn.style.button_color = 'tan'
+        # self.float34 = FloatText(value='0.1', step='0.01', style=style, layout=widget_layout)
+        # units_btn = Button(description='', disabled=True, layout=name_button_layout)
+        # units_btn.style.button_color = 'tan'
+        # description_btn = Button(description='', disabled=True, layout=desc_button_layout)
+        # description_btn.style.button_color = 'tan'
+        # row = [name_btn, self.float34, units_btn, description_btn]
 
         box36 = Box(children=row, layout=box_layout)
         name_btn = Button(description='padhesion', disabled=True, layout=name_button_layout)
@@ -498,7 +516,9 @@ class CellTypesTab(object):
           box30,
           box31,
           box32,
-          box33
+          box33,
+          box34,
+          box35
         ])
 
         # custom data: div_row6,
@@ -635,6 +655,12 @@ self.cell_def_vbox0,         ])
             elif mutation.get('node') == 'ERK':
                 self.bool17.value = True
                 self.float31.value = float(value.text)
+            elif mutation.get('node') == 'miR200':
+                self.bool18.value = True
+                self.float32.value = float(value.text)
+            elif mutation.get('node') == 'miR203':
+                self.bool19.value = True
+                self.float33.value = float(value.text)
 
 
         # to add custom data  self.float32.value = float(uep.find('.//cell_definition[1]//phenotype//customdata//pintegrin').text)
@@ -878,5 +904,30 @@ self.cell_def_vbox0,         ])
                     continue
                     #print('there is no optoSRC!')
 
+        if self.bool18.value == True:
+            mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
+            ET.SubElement(mutations, "mutation", node="miR200").text = str(self.float32.value)
+        else:
+            mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
+            for mutation in mutations:
+                if mutation.get('node') == 'miR200':
+                    #print('found optoSRC !')
+                    mutations.remove(mutation)
+                    break
+                else:
+                    continue
+                    #print('there is no optoSRC!')
 
-
+        if self.bool19.value == True:
+            mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
+            ET.SubElement(mutations, "mutation", node="miR203").text = str(self.float33.value)
+        else:
+            mutations = uep.find('.//cell_definition[1]//phenotype//intracellular//mutations')
+            for mutation in mutations:
+                if mutation.get('node') == 'miR203':
+                    #print('found optoSRC !')
+                    mutations.remove(mutation)
+                    break
+                else:
+                    continue
+                    #print('there is no optoSRC!')
