@@ -42,8 +42,8 @@ class UserTab(object):
           value='ecm',
           style=style, layout=widget_layout)
 
-        param_name39 = Button(description='node_to_mutate', disabled=True, layout=name_button_layout)
-        param_name39.style.button_color = 'lightblue'
+        param_name41 = Button(description='node_to_mutate', disabled=True, layout=name_button_layout)
+        param_name41.style.button_color = 'lightblue'
 
         self.node_to_mutate = Text(
             value='SRC',
@@ -241,94 +241,110 @@ class UserTab(object):
           step=0.1,
           style=style, layout=widget_layout)
 
-        param_name27 = Button(description='config_radius', disabled=True, layout=name_button_layout)
+        param_name27 = Button(description='tumor_radius', disabled=True, layout=name_button_layout)
         param_name27.style.button_color = 'lightgreen'
 
-        self.config_radius = FloatText(
+        self.tumor_radius = FloatText(
           value=100,
           step=10,
           style=style, layout=widget_layout)
 
-        param_name28 = Button(description='tgfbeta_radius', disabled=True, layout=name_button_layout)
-        param_name28.style.button_color = 'tan'
+        param_name28 = Button(description='ecm_radius', disabled=True, layout=name_button_layout)
+        param_name28.style.button_color = 'lightgreen'
+
+        self.ecm_radius = FloatText(
+          value=100,
+          step=10,
+          style=style, layout=widget_layout)
+
+        param_name29 = Button(description='shell_length', disabled=True, layout=name_button_layout)
+        param_name29.style.button_color = 'lightgreen'
+
+        self.shell_length = FloatText(
+          value=100,
+          step=10,
+          style=style, layout=widget_layout)
+
+        param_name30 = Button(description='tgfbeta_radius', disabled=True, layout=name_button_layout)
+        param_name30.style.button_color = 'tan'
 
         self.tgfbeta_radius = FloatText(
           value=90,
           step=1,
           style=style, layout=widget_layout)
 
-        param_name29 = Button(description='density_tgfbeta_max', disabled=True, layout=name_button_layout)
-        param_name29.style.button_color = 'lightgreen'
+        param_name31 = Button(description='density_tgfbeta_max', disabled=True, layout=name_button_layout)
+        param_name31.style.button_color = 'lightgreen'
 
         self.density_tgfbeta_max = FloatText(
           value=0.4,
           step=0.1,
           style=style, layout=widget_layout)
 
-        param_name30 = Button(description='density_tgfbeta_min', disabled=True, layout=name_button_layout)
-        param_name30.style.button_color = 'tan'
+        param_name32 = Button(description='density_tgfbeta_min', disabled=True, layout=name_button_layout)
+        param_name32.style.button_color = 'tan'
 
         self.density_tgfbeta_min = FloatText(
           value=0.4,
           step=0.1,
           style=style, layout=widget_layout)
 
-        param_name31 = Button(description='density_ECM_max', disabled=True, layout=name_button_layout)
-        param_name31.style.button_color = 'lightgreen'
+        param_name33 = Button(description='density_ECM_max', disabled=True, layout=name_button_layout)
+        param_name33.style.button_color = 'lightgreen'
 
         self.density_ECM_max = FloatText(
           value=0.5,
           step=0.1,
           style=style, layout=widget_layout)
 
-        param_name32 = Button(description='density_ECM_min', disabled=True, layout=name_button_layout)
-        param_name32.style.button_color = 'tan'
+        param_name34 = Button(description='density_ECM_min', disabled=True, layout=name_button_layout)
+        param_name34.style.button_color = 'tan'
 
         self.density_ECM_min = FloatText(
           value=0.5,
           step=0.1,
           style=style, layout=widget_layout)
 
-        param_name33 = Button(description='ecm_degradation', disabled=True, layout=name_button_layout)
-        param_name33.style.button_color = 'lightgreen'
+        param_name35 = Button(description='ecm_degradation', disabled=True, layout=name_button_layout)
+        param_name35.style.button_color = 'lightgreen'
 
         self.ecm_degradation = FloatText(
           value= 0.05 ,
           step=0.01,
           style=style, layout=widget_layout)
 
-        param_name34 = Button(description='TGFbeta_degradation', disabled=True, layout=name_button_layout)
-        param_name34.style.button_color = 'tan'
+        param_name36 = Button(description='TGFbeta_degradation', disabled=True, layout=name_button_layout)
+        param_name36.style.button_color = 'tan'
 
         self.TGFbeta_degradation = FloatText(
           value= 0.002 ,
           step=0.0001,
           style=style, layout=widget_layout)
 
-        param_name35 = Button(description='ECM_TGFbeta_ratio', disabled=True, layout=name_button_layout)
-        param_name35.style.button_color = 'lightgreen'
+        param_name37 = Button(description='ECM_TGFbeta_ratio', disabled=True, layout=name_button_layout)
+        param_name37.style.button_color = 'lightgreen'
 
         self.ECM_TGFbeta_ratio = FloatText(
           value=0.75,
           step=0.1,
           style=style, layout=widget_layout)
 
-        param_name36 = Button(description='parameter_to_visualize', disabled=True, layout=name_button_layout)
-        param_name36.style.button_color = 'tan'
+        param_name38 = Button(description='parameter_to_visualize', disabled=True, layout=name_button_layout)
+        param_name38.style.button_color = 'tan'
 
         self.parameter_to_visualize = Text(
           value='padhesion',
           style=style, layout=widget_layout)
 
-        param_name37 = Button(description='node_to_visualize', disabled=True, layout=name_button_layout)
-        param_name37.style.button_color = 'lightgreen'
+        param_name39 = Button(description='node_to_visualize', disabled=True, layout=name_button_layout)
+        param_name39.style.button_color = 'lightgreen'
 
         self.node_to_visualize = Text(
           value='EMT',
           style=style, layout=widget_layout)
 
-        param_name38 = Button(description='color_function', disabled=True, layout=name_button_layout)
-        param_name38.style.button_color = 'tan'
+        param_name40 = Button(description='color_function', disabled=True, layout=name_button_layout)
+        param_name40.style.button_color = 'tan'
 
         self.color_function = IntText(
           value=2,
@@ -412,7 +428,11 @@ class UserTab(object):
         units_button38 = Button(description='', disabled=True, layout=units_button_layout) 
         units_button38.style.button_color = 'tan'
         units_button39 = Button(description='', disabled=True, layout=units_button_layout)
-        units_button39.style.button_color = 'lightblue'
+        units_button39.style.button_color = 'lightgreen'
+        units_button40 = Button(description='', disabled=True, layout=units_button_layout)
+        units_button40.style.button_color = 'tan'
+        units_button41 = Button(description='', disabled=True, layout=units_button_layout)
+        units_button41.style.button_color = 'lightblue'
 
         desc_button1 = Button(description='change seed of the simulation' , tooltip='change seed of the simulation', disabled=True, layout=desc_button_layout) 
         desc_button1.style.button_color = 'lightgreen'
@@ -468,30 +488,34 @@ class UserTab(object):
         desc_button26.style.button_color = 'tan'
         desc_button27 = Button(description='change the initial radius of the tumor' , tooltip='change the initial radius of the tumor', disabled=True, layout=desc_button_layout) 
         desc_button27.style.button_color = 'lightgreen'
-        desc_button28 = Button(description='change radius of the tgfbeta substrate' , tooltip='change radius of the tgfbeta substrate', disabled=True, layout=desc_button_layout) 
-        desc_button28.style.button_color = 'tan'
-        desc_button29 = Button(description='change initial density of the tgfbeta substrate' , tooltip='change initial density of the tgfbeta substrate', disabled=True, layout=desc_button_layout) 
+        desc_button28 = Button(description='change the initial radius of the ECM' , tooltip='change the initial radius of the ECM', disabled=True, layout=desc_button_layout) 
+        desc_button28.style.button_color = 'lightgreen'
+        desc_button29 = Button(description='change the initial radius of the tumor shell' , tooltip='change the initial radius of the tumor shell', disabled=True, layout=desc_button_layout) 
         desc_button29.style.button_color = 'lightgreen'
-        desc_button30 = Button(description='change initial density of the tgfbeta substrate' , tooltip='change initial density of the tgfbeta substrate', disabled=True, layout=desc_button_layout) 
+        desc_button30 = Button(description='change radius of the tgfbeta substrate' , tooltip='change radius of the tgfbeta substrate', disabled=True, layout=desc_button_layout) 
         desc_button30.style.button_color = 'tan'
-        desc_button31 = Button(description='change initial density of the ECM substrate' , tooltip='change initial density of the ECM substrate', disabled=True, layout=desc_button_layout) 
+        desc_button31 = Button(description='change initial density of the tgfbeta substrate' , tooltip='change initial density of the tgfbeta substrate', disabled=True, layout=desc_button_layout) 
         desc_button31.style.button_color = 'lightgreen'
-        desc_button32 = Button(description='change initial density of the ECM substrate' , tooltip='change initial density of the ECM substrate', disabled=True, layout=desc_button_layout) 
+        desc_button32 = Button(description='change initial density of the tgfbeta substrate' , tooltip='change initial density of the tgfbeta substrate', disabled=True, layout=desc_button_layout) 
         desc_button32.style.button_color = 'tan'
-        desc_button33 = Button(description='chenage the amount of ECM degraded by the cells with Matrix_modifcation ON' , tooltip='chenage the amount of ECM degraded by the cells with Matrix_modifcation ON', disabled=True, layout=desc_button_layout) 
+        desc_button33 = Button(description='change initial density of the ECM substrate' , tooltip='change initial density of the ECM substrate', disabled=True, layout=desc_button_layout) 
         desc_button33.style.button_color = 'lightgreen'
-        desc_button34 = Button(description='chenage the amount of TGFbeta degraded by the cells' , tooltip='chenage the amount of TGFbeta degraded by the cells', disabled=True, layout=desc_button_layout) 
+        desc_button34 = Button(description='change initial density of the ECM substrate' , tooltip='change initial density of the ECM substrate', disabled=True, layout=desc_button_layout) 
         desc_button34.style.button_color = 'tan'
-        desc_button35 = Button(description='change the threshold needed to start sensing TGFbeta inside a voxel with ECM (cell must degrades a certain amount of ECM before sensing TGFbeta)' , tooltip='change the threshold needed to start sensing TGFbeta inside a voxel with ECM (cell must degrades a certain amount of ECM before sensing TGFbeta)', disabled=True, layout=desc_button_layout) 
+        desc_button35 = Button(description='change the amount of ECM degraded by the cells with Matrix_modifcation ON' , tooltip='chenage the amount of ECM degraded by the cells with Matrix_modifcation ON', disabled=True, layout=desc_button_layout) 
         desc_button35.style.button_color = 'lightgreen'
-        desc_button36 = Button(description='change the parameter to visualize in the plot tab when coloring cells by custom data value' , tooltip='change the parameter to visualize in the plot tab when coloring cells by custom data value', disabled=True, layout=desc_button_layout) 
+        desc_button36 = Button(description='change the amount of TGFbeta degraded by the cells' , tooltip='chenage the amount of TGFbeta degraded by the cells', disabled=True, layout=desc_button_layout) 
         desc_button36.style.button_color = 'tan'
-        desc_button37 = Button(description='change the node to visualize in the plot tab when coloring cells by custom data value' , tooltip='change the node to visualize in the plot tab when coloring cells by custom data value', disabled=True, layout=desc_button_layout) 
+        desc_button37 = Button(description='change the threshold needed to start sensing TGFbeta inside a voxel with ECM (cell must degrades a certain amount of ECM before sensing TGFbeta)' , tooltip='change the threshold needed to start sensing TGFbeta inside a voxel with ECM (cell must degrades a certain amount of ECM before sensing TGFbeta)', disabled=True, layout=desc_button_layout) 
         desc_button37.style.button_color = 'lightgreen'
-        desc_button38 = Button(description='change the basic color function: 0 for ECM based color, 1 for phase based color, 2 for node based color' , tooltip='change the basic color function: 0 for ECM based color, 1 for phase based color, 2 for node based color', disabled=True, layout=desc_button_layout) 
+        desc_button38 = Button(description='change the parameter to visualize in the plot tab when coloring cells by custom data value' , tooltip='change the parameter to visualize in the plot tab when coloring cells by custom data value', disabled=True, layout=desc_button_layout) 
         desc_button38.style.button_color = 'tan'
-        desc_button39 = Button(description='select another node to mutate for the experiments in a selected area ' , tooltip='select another node to mutate for the experiments in a selected area', disabled=True, layout=desc_button_layout)
-        desc_button39.style.button_color = 'lightblue'
+        desc_button39 = Button(description='change the node to visualize in the plot tab when coloring cells by custom data value' , tooltip='change the node to visualize in the plot tab when coloring cells by custom data value', disabled=True, layout=desc_button_layout) 
+        desc_button39.style.button_color = 'lightgreen'
+        desc_button40 = Button(description='change the basic color function: 0 for ECM based color, 1 for phase based color, 2 for node based color' , tooltip='change the basic color function: 0 for ECM based color, 1 for phase based color, 2 for node based color', disabled=True, layout=desc_button_layout) 
+        desc_button40.style.button_color = 'tan'
+        desc_button41 = Button(description='select another node to mutate for the experiments in a selected area ' , tooltip='select another node to mutate for the experiments in a selected area', disabled=True, layout=desc_button_layout)
+        desc_button41.style.button_color = 'lightblue'
 
 
         row1 = [param_name1, self.random_seed, units_button1, desc_button1] 
@@ -520,19 +544,21 @@ class UserTab(object):
         row24 = [param_name24, self.motility_amplitude_min, units_button24, desc_button24] 
         row25 = [param_name25, self.motility_amplitude_max, units_button25, desc_button25] 
         row26 = [param_name26, self.mode_motility, units_button26, desc_button26] 
-        row27 = [param_name27, self.config_radius, units_button27, desc_button27] 
-        row28 = [param_name28, self.tgfbeta_radius, units_button28, desc_button28] 
-        row29 = [param_name29, self.density_tgfbeta_max, units_button29, desc_button29] 
-        row30 = [param_name30, self.density_tgfbeta_min, units_button30, desc_button30] 
-        row31 = [param_name31, self.density_ECM_max, units_button31, desc_button31] 
-        row32 = [param_name32, self.density_ECM_min, units_button32, desc_button32] 
-        row33 = [param_name33, self.ecm_degradation, units_button33, desc_button33] 
-        row34 = [param_name34, self.TGFbeta_degradation, units_button34, desc_button34] 
-        row35 = [param_name35, self.ECM_TGFbeta_ratio, units_button35, desc_button35] 
-        row36 = [param_name36, self.parameter_to_visualize, units_button36, desc_button36] 
-        row37 = [param_name37, self.node_to_visualize, units_button37, desc_button37] 
-        row38 = [param_name38, self.color_function, units_button38, desc_button38]
-        row39 = [param_name39, self.node_to_mutate, units_button39, desc_button39]
+        row27 = [param_name27, self.tumor_radius, units_button27, desc_button27] 
+        row28 = [param_name28, self.ecm_radius, units_button28, desc_button28]
+        row29 = [param_name29, self.shell_length, units_button29, desc_button29]
+        row30 = [param_name30, self.tgfbeta_radius, units_button30, desc_button30] 
+        row31 = [param_name31, self.density_tgfbeta_max, units_button31, desc_button31] 
+        row32 = [param_name32, self.density_tgfbeta_min, units_button32, desc_button32] 
+        row33 = [param_name33, self.density_ECM_max, units_button33, desc_button33] 
+        row34 = [param_name34, self.density_ECM_min, units_button34, desc_button34] 
+        row35 = [param_name35, self.ecm_degradation, units_button35, desc_button35] 
+        row36 = [param_name36, self.TGFbeta_degradation, units_button36, desc_button36] 
+        row37 = [param_name37, self.ECM_TGFbeta_ratio, units_button37, desc_button37] 
+        row38 = [param_name38, self.parameter_to_visualize, units_button38, desc_button38] 
+        row39 = [param_name39, self.node_to_visualize, units_button39, desc_button39] 
+        row40 = [param_name40, self.color_function, units_button40, desc_button40]
+        row41 = [param_name41, self.node_to_mutate, units_button41, desc_button41]
 
         box_layout = Layout(display='flex', flex_flow='row', align_items='stretch', width='100%')
         box1 = Box(children=row1, layout=box_layout)
@@ -574,11 +600,13 @@ class UserTab(object):
         box37 = Box(children=row37, layout=box_layout)
         box38 = Box(children=row38, layout=box_layout)
         box39 = Box(children=row39, layout=box_layout)
+        box40 = Box(children=row40, layout=box_layout)
+        box41 = Box(children=row41, layout=box_layout)
 
         self.tab = VBox([
           box1,
           box2,
-          box39,
+          box41,
           box3,
           box4,
           box5,
@@ -615,6 +643,8 @@ class UserTab(object):
           box36,
           box37,
           box38,
+          box39,
+          box40,
         ])
 
     # Populate the GUI widgets with values from the XML
@@ -653,7 +683,9 @@ class UserTab(object):
         self.motility_amplitude_min.value = float(uep.find('.//motility_amplitude_min').text)
         self.motility_amplitude_max.value = float(uep.find('.//motility_amplitude_max').text)
         self.mode_motility.value = int(uep.find('.//mode_motility').text)
-        self.config_radius.value = float(uep.find('.//config_radius').text)
+        self.tumor_radius.value = float(uep.find('.//tumor_radius').text)
+        self.ecm_radius.value = float(uep.find('.//ecm_radius').text)
+        self.shell_length.value = float(uep.find('.//shell_length').text)
         self.tgfbeta_radius.value = float(uep.find('.//tgfbeta_radius').text)
         self.density_tgfbeta_max.value = float(uep.find('.//density_tgfbeta_max').text)
         self.density_tgfbeta_min.value = float(uep.find('.//density_tgfbeta_min').text)
@@ -704,6 +736,8 @@ class UserTab(object):
         uep.find('.//motility_amplitude_max').text = str(self.motility_amplitude_max.value)
         uep.find('.//mode_motility').text = str(self.mode_motility.value)
         uep.find('.//config_radius').text = str(self.config_radius.value)
+        uep.find('.//ecm_radius').text = str(self.ecm_radius.value)
+        uep.find('.//shell_length').text = str(self.shell_length.value)
         uep.find('.//tgfbeta_radius').text = str(self.tgfbeta_radius.value)
         uep.find('.//density_tgfbeta_max').text = str(self.density_tgfbeta_max.value)
         uep.find('.//density_tgfbeta_min').text = str(self.density_tgfbeta_min.value)

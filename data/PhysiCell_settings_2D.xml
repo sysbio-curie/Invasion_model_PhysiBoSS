@@ -87,7 +87,7 @@
 	</domain>
 	
 	<overall>
-		<max_time units="min">7500</max_time>
+		<max_time units="min">4500</max_time>
 		<time_units>min</time_units>
 		<space_units>micron</space_units>
 
@@ -97,11 +97,11 @@
 	</overall>
 	
 	<parallel>
-		<omp_num_threads>12</omp_num_threads>
+		<omp_num_threads>10</omp_num_threads>
 	</parallel> 
 	
 	<save>
-		<folder>.</folder> <!-- use . for root --> 
+		<folder>output</folder>  
 
 		<full_data>
 			<interval units="min">10</interval>
@@ -114,14 +114,14 @@
 		</SVG>
 		
 		<legacy_data>
-			<enable>true</enable>
+			<enable>false</enable>
 		</legacy_data>
 	</save>
 	
 	<microenvironment_setup>
 		<variable name="oxygen" units="mmHg" ID="0">
 			<physical_parameter_set>
-				<diffusion_coefficient units="micron^2/min">6000.0</diffusion_coefficient> <!--from Colom et al. assuming a diffusion of 10^5, in matrigel is 40% smaller-->
+				<diffusion_coefficient units="micron^2/min">6000.0</diffusion_coefficient> 
 				<decay_rate units="1/min">.1</decay_rate> 
 			</physical_parameter_set>
 			<initial_condition units="mmHg">38.0</initial_condition>
@@ -158,11 +158,11 @@
 		<options>
 			<calculate_gradients>true</calculate_gradients>
 			<track_internalized_substrates_in_each_agent>true</track_internalized_substrates_in_each_agent>
-			<!-- not yet supported --> 
+			 
 			<initial_condition type="matlab" enabled="false">
 				<filename>./config/initial.mat</filename>
 			</initial_condition>
-			<!-- not yet supported --> 
+			 
 			<dirichlet_nodes type="matlab" enabled="false">
 				<filename>./config/dirichlet.mat</filename>
 			</dirichlet_nodes>
@@ -173,13 +173,13 @@
 		<cell_definition name="default" ID="0">
 			<phenotype>
 				<cycle code="0" name="advanced_Ki67_cycle_model">  
-					<!-- using higher than normal significant digits to match divisions in default code -->
+					
 					<phase_transition_rates units="1/min"> 
-						<!-- - to + -->
-						<!--rate start_index="0" end_index="1" fixed_duration="true">1e30</rate-->
-						<!-- + (pre-mitotic) to + (post-mitotic)  -->
-						<rate start_index="1" end_index="2" fixed_duration="true">1e30</rate>
-						<!-- + (post-mitotic) to - -->
+						
+						
+						
+						<rate start_index="1" end_index="2" fixed_duration="true">1e+30</rate>
+						
 						<rate start_index="2" end_index="0" fixed_duration="true">0.006666667</rate>
 					</phase_transition_rates>
 				</cycle>
@@ -188,52 +188,90 @@
 					<model code="100" name="apoptosis"> 
 						<death_rate units="1/min">0.0</death_rate>
 						<phase_transition_rates units="1/min">
-							<rate start_index="0" end_index="1" fixed_duration="true">1e30</rate>
+							<rate start_index="0" end_index="1" fixed_duration="true">1e+30</rate>
 						</phase_transition_rates>
+						<parameters>
+							<unlysed_fluid_change_rate units="1/min">0.05</unlysed_fluid_change_rate>
+							<lysed_fluid_change_rate units="1/min">0.0</lysed_fluid_change_rate>
+							<cytoplasmic_biomass_change_rate units="1/min">0.0166667</cytoplasmic_biomass_change_rate>
+							<nuclear_biomass_change_rate units="1/min">0.00583333</nuclear_biomass_change_rate>
+							<calcification_rate units="1/min">0.0</calcification_rate>
+							<relative_rupture_volume units="dimensionless">2.0</relative_rupture_volume>
+						</parameters>
 					</model> 
 
 					<model code="101" name="necrosis">
 						<death_rate units="1/min">0.0</death_rate>
 						<phase_durations units="min">
-							<duration index="0" fixed_duration="true">0</duration>
-							<duration index="1" fixed_duration="true">86400</duration>
+							<duration index="0" fixed_duration="true">0.0</duration>
+							<duration index="1" fixed_duration="true">86400.0</duration>
 						</phase_durations>
 						
 						<parameters>
 							<unlysed_fluid_change_rate units="1/min">0.05</unlysed_fluid_change_rate>
-							<lysed_fluid_change_rate units="1/min">0</lysed_fluid_change_rate>
-							<cytoplasmic_biomass_change_rate units="1/min">1.66667e-02</cytoplasmic_biomass_change_rate>
-							<nuclear_biomass_change_rate units="1/min">5.83333e-03</nuclear_biomass_change_rate>
-							<calcification_rate units="1/min">0</calcification_rate>
+							<lysed_fluid_change_rate units="1/min">0.0</lysed_fluid_change_rate>
+							<cytoplasmic_biomass_change_rate units="1/min">0.0166667</cytoplasmic_biomass_change_rate>
+							<nuclear_biomass_change_rate units="1/min">0.00583333</nuclear_biomass_change_rate>
+							<calcification_rate units="1/min">0.0</calcification_rate>
 							<relative_rupture_volume units="dimensionless">2.0</relative_rupture_volume>
 						</parameters>
 					</model> 
-				</death>					
+				</death>
+
+				<volume>  
+					<total units="micron^3">2494.0</total>
+					<fluid_fraction units="dimensionless">0.75</fluid_fraction>
+					<nuclear units="micron^3">540.0</nuclear>
+					
+					<fluid_change_rate units="1/min">0.05</fluid_change_rate>
+					<cytoplasmic_biomass_change_rate units="1/min">0.0045</cytoplasmic_biomass_change_rate>
+					<nuclear_biomass_change_rate units="1/min">0.0055</nuclear_biomass_change_rate>
+					
+					<calcified_fraction units="dimensionless">0.0</calcified_fraction>
+					<calcification_rate units="1/min">0.0</calcification_rate>
+					
+					<relative_rupture_volume units="dimensionless">2.0</relative_rupture_volume>
+				</volume> 					
 
 				<mechanics> 
-					<cell_cell_repulsion_strength units="micron/min">20.0</cell_cell_repulsion_strength>
+					<cell_cell_adhesion_strength units="micron/min">0.0</cell_cell_adhesion_strength>
+					<cell_cell_repulsion_strength units="micron/min">10.0</cell_cell_repulsion_strength>
 					<relative_maximum_adhesion_distance units="dimensionless">1.25</relative_maximum_adhesion_distance>
 					
 					<options>
-						<set_relative_equilibrium_distance enabled="true" units="dimensionless">1.25</set_relative_equilibrium_distance>
-						<set_absolute_equilibrium_distance enabled="true" units="micron">10.12</set_absolute_equilibrium_distance>
+						<set_relative_equilibrium_distance enabled="true" units="dimensionless">1.8</set_relative_equilibrium_distance>
+						<set_absolute_equilibrium_distance enabled="true" units="micron">15.12</set_absolute_equilibrium_distance>
 					</options>
 				</mechanics>
 
 				<motility>  
 					<speed units="micron/min">0.3</speed>
 					<persistence_time units="min">0.3</persistence_time>
-					<migration_bias units="dimensionless">0.3</migration_bias>
+					<migration_bias units="dimensionless">0.5</migration_bias>
 					
 					<options>
-						<enabled>true</enabled>
+						<enabled>false</enabled>
 						<use_2D>true</use_2D>
+						<chemotaxis>
+							<enabled>false</enabled>
+							<substrate>oxygen</substrate>
+							<direction>1.0</direction>
+						</chemotaxis>
 					</options>
 				</motility>
 
+				<secretion>
+					<substrate name="oxygen">
+						<secretion_rate units="1/min">0</secretion_rate>
+						<secretion_target units="substrate density">0</secretion_target>
+						<uptake_rate units="1/min">0</uptake_rate>
+						<net_export_rate units="total substrate/min">0</net_export_rate> 
+					</substrate>  
+				</secretion>
+
 				<intracellular type="maboss">
-					<bnd_filename>../data/boolean_network/intracellular_model.bnd</bnd_filename>
-					<cfg_filename>../data/boolean_network/intracellular_model.cfg</cfg_filename>
+					<bnd_filename>./config/boolean_network/intracellular_model.bnd</bnd_filename>
+					<cfg_filename>./config/boolean_network/intracellular_model.cfg</cfg_filename>
 					<time_step>10</time_step>
 					<time_stochasticity>1</time_stochasticity>
 					<initial_values>
@@ -249,13 +287,13 @@
 				<pintegrin type="double" units="">0.1</pintegrin>
 				<integrin type="double" units="">0.1</integrin>
 				<pmotility type="double" units="">0.1</pmotility>
-				<padhesion type="double" units="">0.9</padhesion>
-				<nucleus_deform type="double" units="">0</nucleus_deform>
-				<ecm_contact type="double" units="">0</ecm_contact>
-				<TGFbeta_contact type="double" units="">0</TGFbeta_contact>
+				<padhesion type="double" units="">0.1</padhesion>
+				<nucleus_deform type="double" units="">0.0</nucleus_deform>
+				<ecm_contact type="double" units="">0.0</ecm_contact>
+				<TGFbeta_contact type="double" units="">0.0</TGFbeta_contact>
 				<cell_contact type="double" units="">0.6</cell_contact>
-				<freezed type="int" units="">0</freezed>
-				<passive type="bool" units="">1</passive>
+				<freezed type="int" units="">0.0</freezed>
+				<passive type="bool" units="">1.0</passive>
 			</custom_data>
 		</cell_definition>
 	</cell_definitions> 
@@ -264,11 +302,12 @@
 		<random_seed type="int" units="dimensionless" description="change seed of the simulation">0</random_seed> 
 		<substrate_to_monitor type="string" units="">ecm</substrate_to_monitor> 
 		<!-- src experiment parameters -->
+		<simulate_SRC type="bool" units="" description="change initial configuration to simulate SRC">false</simulate_SRC>
 		<node_to_mutate type="string" units="" description="change the node to mutate for the experiments">ERK</node_to_mutate>
-		<src_activation_time type="double" units="min">2400000</src_activation_time> <!--20160 -->
-		<src_stop_time type="double" units="min">2400000</src_stop_time>
-		<config_radius_light type="double" units="" description="change the initial radius of the light illumination">400</config_radius_light> 
-		<!-- cell-substrates interaction paramaters --> 
+		<src_activation_time type="double" units="min">12000000</src_activation_time> 
+		<src_stop_time type="double" units="min">28800000</src_stop_time>
+		<config_radius_light type="double" units="" description="change the initial radius of the light illumination">15</config_radius_light> 
+		 <!-- cell-substrates interaction paramaters --> 
 		<ecm_adhesion_min type="double" units="" description="used to set the min adhesion between cells and ECM"> 1 </ecm_adhesion_min>
 		<ecm_adhesion_max type="double" units="" description="used to set the min adhesion between cells and ECM"> 2 </ecm_adhesion_max>
 		<cell_ecm_repulsion type="double" units="" description="change the value of ECM repulsion"> 15 </cell_ecm_repulsion>
@@ -287,15 +326,17 @@
 		<cell_junctions_attach_threshold type="double" units="" description="change the threshold needed to attach cells in cluster with cell junction">0.05</cell_junctions_attach_threshold>
 		<cell_junctions_detach_threshold type="double" units="" description="change the threshold needed to detach cells in cluster with cell junction">0.03</cell_junctions_detach_threshold>
 		<!-- motility parameters -->
-		<migration_bias type='double' units="" description="change value of migration bias for cells with migration node active">0.8</migration_bias>
-		<migration_speed type='double' units="micron/min" description="change value of migration speed for cells with migration node active">0.6</migration_speed>
+		<migration_bias type="double" units="" description="change value of migration bias for cells with migration node active">0.8</migration_bias>
+		<migration_speed type="double" units="micron/min" description="change value of migration speed for cells with migration node active">0.7</migration_speed>
 		<persistence type="double" units="min" description="change value of persistence for cells with migration node active">1</persistence>
     	<motility_amplitude_min type="double" units="" description="change the min value of motility amplitude"> 0.1 </motility_amplitude_min>
     	<motility_amplitude_max type="double" units="" description="change the max value of motility amplitude"> 0.8 </motility_amplitude_max>
     	<mode_motility type="int" units="" description="not used yet"> 1 </mode_motility>
 		<!-- substrates parameters -->
-		<config_radius type="double" units="" description="change the initial radius of the tumor">100</config_radius>
-		<tgfbeta_radius type="double" units="" description="change radius of the tgfbeta substrate">90</tgfbeta_radius>
+		<tumor_radius type="double" units="" description="change the initial radius of the tumor">80</tumor_radius>
+		<ecm_radius type="double" units="" description="change the initial radius of the ECM">80</ecm_radius>
+		<shell_length type="double" units="" description="change the initial radius of the tumor shell">800</shell_length>
+		<tgfbeta_radius type="double" units="" description="change radius of the tgfbeta substrate">80</tgfbeta_radius>
 		<density_tgfbeta_max type="double" units="" description="change initial density of the tgfbeta substrate">0.4</density_tgfbeta_max>
 		<density_tgfbeta_min type="double" units="" description="change initial density of the tgfbeta substrate">0.4</density_tgfbeta_min>
 		<density_ECM_max type="double" units="" description="change initial density of the ECM substrate">0.5</density_ECM_max>
@@ -305,7 +346,7 @@
 		<ECM_TGFbeta_ratio type="double" units="" description="change the threshold needed to start sensing TGFbeta inside a voxel with ECM (cell must degrades a certain amount of ECM before sensing TGFbeta)">0.75</ECM_TGFbeta_ratio>
 		<!-- visualization -->
 		<parameter_to_visualize type="string" units="" description="change the parameter to visualize in the plot tab when coloring cells by custom data value">padhesion</parameter_to_visualize>
-		<node_to_visualize type="string" units="" description="change the node to visualize in the plot tab when coloring cells by custom data value">EMT</node_to_visualize> <!-- insert the name of the node you want to visualize in paraview-->
+		<node_to_visualize type="string" units="" description="change the node to visualize in the plot tab when coloring cells by custom data value">ECM_degrad</node_to_visualize> 
 		<color_function type="int" units="" description="change the basic color function: 0 for ECM based color, 1 for phase based color, 2 for node based color">2</color_function> 
 	</user_parameters>
 	

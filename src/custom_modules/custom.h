@@ -108,6 +108,7 @@ std::vector<init_record> read_init_file(std::string filename, char delimiter, bo
 void set_substrate_density(int density_index, double max, double min, double radius);
 std::vector<std::vector<double>> create_cell_sphere_positions(double cell_radius, double sphere_radius);
 std::vector<std::vector<double>> create_cell_disc_positions(double cell_radius, double disc_radius);
+void create_hexagonal_tissue(double cell_radius);
 /** \brief Go to proliferative phase if proliferation ON and in G0 phase */
 void do_proliferation(Cell* pCell, Phenotype& phenotype, double dt);
 bool wait_for_cell_growth(Cell* pCell, Phenotype& phenotype, double dt);
@@ -179,7 +180,6 @@ inline double contact_TGFB(Cell* pCell)
 double integrinStrength(Cell* pC);
 double get_adhesion();
 double adhesion(Cell* pCell, Cell* other_cell);
-double get_adhesion();
 void set_oxygen_motility(Cell* pCell, bool value);
 bool has_neighbor(Cell* pCell, int);
 bool wait_for_nucleus_growth(Cell* cell, Phenotype& phenotype, double dt);
