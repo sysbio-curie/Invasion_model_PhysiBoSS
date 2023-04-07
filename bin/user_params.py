@@ -735,7 +735,7 @@ class UserTab(object):
         uep.find('.//motility_amplitude_min').text = str(self.motility_amplitude_min.value)
         uep.find('.//motility_amplitude_max').text = str(self.motility_amplitude_max.value)
         uep.find('.//mode_motility').text = str(self.mode_motility.value)
-        uep.find('.//config_radius').text = str(self.config_radius.value)
+        uep.find('.//tumor_radius').text = str(self.tumor_radius.value)
         uep.find('.//ecm_radius').text = str(self.ecm_radius.value)
         uep.find('.//shell_length').text = str(self.shell_length.value)
         uep.find('.//tgfbeta_radius').text = str(self.tgfbeta_radius.value)

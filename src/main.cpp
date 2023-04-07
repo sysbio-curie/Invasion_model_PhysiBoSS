@@ -111,7 +111,7 @@ int main( int argc, char* argv[] )
 	
 	/* PhysiCell setup */ 
  	
-	double radius_ECM = parameters.doubles("config_radius");
+	double radius_ECM = parameters.doubles("ecm_radius");
 	double radius_tgfbeta = parameters.doubles("tgfbeta_radius");
 
 	double ECM_min = parameters.doubles("density_ECM_min");
