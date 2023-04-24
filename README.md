@@ -1,5 +1,9 @@
 We present here a model of tumor cell invasion simulated within PhysiBoSS, a multiscale framework which combines agent-based  modeling and continuous time Markov processes applied on Boolean networks. With this model, we aim to study the different modes of cell migration through an extracellular matrix by considering both spatial information obtained from the agent-based simulation and intracellular regulation obtained from the solutions of the Boolean model.
 
+## Read the pre-print version on Biorxiv
+
+[https://www.biorxiv.org/content/10.1101/2022.10.07.511296v3](https://www.biorxiv.org/content/10.1101/2022.10.07.511296v3)
+
 We present multiple options to run this simulation, ordered by increasing complexity :
 
 ## Run in Binder : [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/sysbio-curie/Invasion_model_PhysiBoSS/master?filepath=Invasion_GUI.ipynb)
