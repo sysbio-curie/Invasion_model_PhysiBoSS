@@ -1,0 +1,48 @@
+# model in BoolNet format
+# the header targets, factors is mandatory to be importable in the R package BoolNet
+
+targets, factors
+AKT1,            !p53&!CDH2&!CDH1&!GF&!NICD&!miR34&CTNNB1&TGFbetaR | !p53&!CDH2&!CDH1&!GF&NICD&!miR34&CTNNB1 | !p53&!CDH2&!CDH1&GF&!miR34&CTNNB1 | !p53&CDH2&!CDH1&!miR34&CTNNB1
+AKT2,            !p53&!CDH2&!GF&!miR34&TWIST1&TGFbeta&!miR203 | !p53&!CDH2&GF&!miR34&TWIST1&!miR203 | !p53&CDH2&!miR34&TWIST1&!miR203
+Apoptosis,       !p53&!AKT1&!ERK&!p73&!p63&!miR34&miR200&!ZEB2 | !p53&!AKT1&!ERK&!p73&!p63&miR34&!ZEB2 | !p53&!AKT1&!ERK&!p73&p63&!ZEB2 | !p53&!AKT1&!ERK&p73&!ZEB2 | p53&!AKT1&!ERK&!ZEB2
+CDH1,            !SRC&!AKT2&Neigh&!TWIST1&!SNAI1&!SNAI2&!ZEB1&!ZEB2
+CDH2,            !SRC&TWIST1 | SRC
+CTNNB1,          !SRC&!p53&!AKT1&CDH2&!CDH1&!p63&!miR34&!miR200&!DKK1
+CellCycleArrest, !AKT1&!p21&!miR34&!miR200&!miR203&ZEB2 | !AKT1&!p21&!miR34&!miR200&miR203 | !AKT1&!p21&!miR34&miR200 | !AKT1&!p21&miR34 | !AKT1&p21
+Cell_freeze,     Neigh&!CDH2&CDH1
+Cell_growth,     !HIF1A&!AKT1&ERK&!p21 | !HIF1A&AKT1&!AKT2&ERK&!p21 | !HIF1A&AKT1&AKT2&!ERK&PIK3CA | !HIF1A&AKT1&AKT2&ERK&!p21 | !HIF1A&AKT1&AKT2&ERK&p21&PIK3CA
+DKK1,            !NICD&CTNNB1 | NICD
+DNAdamage,       DNAdamage
+ECM,             ECM
+ECM_adh,         !RAC1&!CDH1&NICD&SMAD | RAC1
+ECM_degrad,      MMPs
+EMT,             CDH2&!CDH1
+ERK,             !AKT1&!CDH2&!GF&!NICD&SMAD | !AKT1&!CDH2&!GF&NICD | !AKT1&!CDH2&GF | !AKT1&CDH2
+FAK,             !ECM&SRC&!p53 | ECM&!p53
+GF,              GF
+HIF1A,           !Oxy
+MMPs,            !RAC1&!NICD&p63 | !RAC1&NICD&!SMAD&p63 | !RAC1&NICD&SMAD&!MMPs&p63 | !RAC1&NICD&SMAD&MMPs&!p73 | !RAC1&NICD&SMAD&MMPs&p73&p63 | RAC1&!MMPs&p63 | RAC1&MMPs&!p73 | RAC1&MMPs&p73&p63
+Migration,       !AKT1&AKT2&!CDH2&ERK&!p63&!miR200&CTNNB1&VIM&EMT | !AKT1&AKT2&CDH2&ERK&!SMAD&!p63&!miR200&CTNNB1&VIM&EMT | !AKT1&AKT2&CDH2&ERK&SMAD&!p63&!miR200&VIM&EMT
+NICD,            !ECM&!p53&FAK&!p73&!p63&!miR34&!miR200 | ECM&!p53&!p73&!p63&!miR34&!miR200
+Neigh,           Neigh
+Oxy,             Oxy
+PIK3CA,          !RAC1&GF | RAC1
+RAC1,            !SRC&FAK&!AKT1&!AKT2 | SRC&!AKT1&!AKT2
+SMAD,            !YAP1&!miR200&TGFbetaR | !YAP1&miR200&!miR203&TGFbetaR | YAP1&!miR200 | YAP1&miR200&!miR203
+SNAI1,           !p53&!NICD&!miR34&!CTNNB1&TWIST1&!miR203 | !p53&NICD&!miR34&!CTNNB1&!miR203
+SNAI2,           !p53&!NICD&!miR200&!CTNNB1&TWIST1&!miR203 | !p53&!NICD&!miR200&CTNNB1&!miR203 | !p53&NICD&!miR200&!miR203
+SRC,             FAK
+TGFbeta,         TGFbeta
+TGFbetaR,        NICD&!CTNNB1&TGFbeta
+TWIST1,          !NICD&!CTNNB1&SNAI1 | !NICD&CTNNB1 | NICD
+VIM,             !SRC&!CTNNB1&ZEB2 | !SRC&CTNNB1 | SRC
+YAP1,            SRC&!AKT1 | SRC&AKT1&!AKT2
+ZEB1,            !NICD&!miR200&!CTNNB1&!TWIST1&SNAI2 | !NICD&!miR200&!CTNNB1&TWIST1&!SNAI1&SNAI2 | !NICD&!miR200&!CTNNB1&TWIST1&SNAI1 | !NICD&!miR200&CTNNB1 | NICD&!miR200
+ZEB2,            !NICD&!miR200&!TWIST1&!miR203&SNAI1 | !NICD&!miR200&TWIST1&!miR203&!SNAI1&SNAI2 | !NICD&!miR200&TWIST1&!miR203&SNAI1 | NICD&!miR200&!miR203
+miR200,          !p53&!AKT2&!p73&p63&!SNAI1&!SNAI2&!ZEB1&!ZEB2 | !p53&!AKT2&p73&!SNAI1&!SNAI2&!ZEB1&!ZEB2 | p53&!AKT2&!SNAI1&!SNAI2&!ZEB1&!ZEB2
+miR203,          p53&!SNAI1&!ZEB1&!ZEB2
+miR34,           !p53&!AKT1&AKT2&p73&!p63&!SNAI1&!ZEB1&!ZEB2 | p53&!AKT1&AKT2&!p63&!SNAI1&!ZEB1&!ZEB2
+p21,             !p53&!AKT1&!AKT2&!ERK&!NICD&!p73&p63 | !p53&!AKT1&!AKT2&!ERK&!NICD&p73 | !p53&!AKT1&!AKT2&!ERK&NICD&!SMAD&!p73&p63 | !p53&!AKT1&!AKT2&!ERK&NICD&!SMAD&p73 | !p53&!AKT1&!AKT2&!ERK&NICD&SMAD | !p53&!AKT1&AKT2&!ERK | p53&!AKT1&!ERK
+p53,             !AKT1&!AKT2&!NICD&!p73&!miR34&!CTNNB1&!SNAI2&DNAdamage | !AKT1&!AKT2&!NICD&!p73&!miR34&CTNNB1&!SNAI2 | !AKT1&!AKT2&!NICD&!p73&miR34&!SNAI2 | !AKT1&!AKT2&NICD&!p73&!SNAI2
+p63,             !p53&!AKT1&!AKT2&!NICD&!miR203&DNAdamage
+p73,             !p53&!AKT1&!AKT2&!YAP1&!ZEB1&DNAdamage
