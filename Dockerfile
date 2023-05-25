@@ -14,7 +14,7 @@ RUN pip3 install jupyter notebook scipy matplotlib hublib joblib==1.1.1 ipywidge
 
 WORKDIR /home/user
 COPY . /home/user
-RUN mkdir /home/user/bin/__pycache__
+RUN mkdir -p /home/user/bin/__pycache__
 RUN chown -R 1000 /home/user
 
 USER user
